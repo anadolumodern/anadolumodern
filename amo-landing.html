@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AMO CORE — Luxury Production Intelligence System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant:ital,wght@0,300;1,300&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ═══════════════════════════════════════════════════════
+       1. DESIGN TOKENS
+    ═══════════════════════════════════════════════════════ */
+    :root {
+      --obsidian:      #07080D;
+      --surface:       #111219;
+      --surface-2:     #161821;
+      --border:        rgba(180,150,80,0.15);
+      --border-hover:  rgba(180,150,80,0.45);
+      --gold:          #C9A84C;
+      --gold-light:    #E2C87A;
+      --gold-dim:      #8A6F34;
+      --gold-glow:     rgba(201,168,76,0.12);
+      --gold-glow-md:  rgba(201,168,76,0.22);
+      --text-primary:  #EDE8DC;
+      --text-secondary:#9A9589;
+      --text-dim:      #5A5650;
+      --ff-title:      'Cinzel', serif;
+      --ff-serif:      'Cormorant', serif;
+      --ff-body:       'Jost', sans-serif;
+      --ease-luxury:   cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --ease-portal:   cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       2. RESET & BASE
+    ═══════════════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: var(--obsidian);
+      color: var(--text-primary);
+      font-family: var(--ff-body);
+      font-weight: 300;
+      letter-spacing: 0.02em;
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       3. AMBIENT LIGHT
+    ═══════════════════════════════════════════════════════ */
+    .ambient-light {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background: radial-gradient(
+        ellipse 70% 55% at 50% 62%,
+        rgba(180,130,40,0.09) 0%,
+        rgba(150,105,30,0.05) 35%,
+        transparent 70%
+      );
+      animation: ambient-breathe 9s ease-in-out infinite;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       4. BACKGROUND GEOMETRY (fixed, behind all content)
+    ═══════════════════════════════════════════════════════ */
+    .bg-geometry {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .bg-geometry svg {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 1100px; height: 1100px;
+      opacity: 0.08;
+      animation: pulse-line 8s ease-in-out infinite;
+    }
+    .bg-ring-outer { animation: rotate-cw  120s linear infinite; transform-origin: center; }
+    .bg-ring-inner { animation: rotate-ccw  80s linear infinite; transform-origin: center; }
+
+    /* ═══════════════════════════════════════════════════════
+       5. TOP BAR
+    ═══════════════════════════════════════════════════════ */
+    .top-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 56px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(7,8,13,0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .top-bar__system-name {
+      font-family: var(--ff-title);
+      font-size: 9.5px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 5px;
+    }
+    .top-bar__subtitle {
+      font-family: var(--ff-body);
+      font-size: 8.5px;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+    }
+    .top-bar__actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .btn-access {
+      font-family: var(--ff-body);
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 8px 18px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      background: transparent;
+      white-space: nowrap;
+      transition: all 0.4s var(--ease-luxury);
+      position: relative;
+    }
+    .btn-access--member {
+      color: var(--text-dim);
+      border-color: rgba(255,255,255,0.06);
+      pointer-events: none;
+    }
+    .btn-access--member::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 18px; right: 18px;
+      height: 1px;
+      background: var(--text-dim);
+      opacity: 0.3;
+    }
+    .btn-access--request {
+      color: var(--gold);
+      border-color: var(--border);
+    }
+    .btn-access--request:hover {
+      color: var(--gold-light);
+      border-color: var(--border-hover);
+      background: var(--gold-glow);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       6. PAGE WRAPPER
+    ═══════════════════════════════════════════════════════ */
+    .page {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      padding-top: 80px;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       7. HERO
+    ═══════════════════════════════════════════════════════ */
+    .hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 48px;
+      position: relative;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; top: 0;
+      height: 1px;
+      background: linear-gradient(90deg,
+        transparent, var(--gold-dim) 30%, var(--gold) 50%, var(--gold-dim) 70%, transparent);
+      opacity: 0.3;
+    }
+
+    /* — Hero title — */
+    .hero__title {
+      font-family: var(--ff-title);
+      font-size: clamp(32px, 4.5vw, 58px);
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      line-height: 1;
+      margin-bottom: 36px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      opacity: 0;
+      animation: fade-up 1s var(--ease-portal) 0.1s forwards;
+    }
+    .hero__title .amo,
+    .hero__title .core {
+      display: inline-block;
+      background: linear-gradient(
+        112deg,
+        #1C0E00 0%,   #5C3A10 5%,   #966020 10%,
+        #BF9040 17%,  #D8B85A 23%,  #EDD890 30%,
+        #FAF2C8 35%,  #EAD878 40%,  #C8A040 48%,
+        #906818 56%,  #A87C28 62%,  #CCAA50 68%,
+        #E8D888 74%,  #F5EEB8 78%,  #D4B050 83%,
+        #8A6020 89%,  #4A2C08 94%,  #1C0E00 100%
+      );
+      background-size: 360% 100%;
+      background-position: 80% center;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter:
+        drop-shadow(0px 3px 5px rgba(0,0,0,0.9))
+        drop-shadow(0px 1px 0px rgba(0,0,0,0.6))
+        drop-shadow(0px -1px 1px rgba(255,238,160,0.07));
+      animation: metal-shimmer 20s ease-in-out infinite;
+    }
+    .hero__title-rule {
+      display: inline-block;
+      flex-shrink: 0;
+      width: 1px;
+      height: 1.45em;
+      margin: 0 0.55em;
+      background: linear-gradient(
+        to bottom,
+        transparent,
+        var(--gold-dim)   15%,
+        var(--gold)       40%,
+        var(--gold-light) 50%,
+        var(--gold)       60%,
+        var(--gold-dim)   85%,
+        transparent
+      );
+      opacity: 0.7;
+    }
+
+    /* — Doctrine — */
+    .hero__doctrine {
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fade-up 1s var(--ease-portal) 0.25s forwards;
+    }
+    .hero__doctrine-label {
+      font-family: var(--ff-body);
+      font-size: 8.5px;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 10px;
+    }
+    .hero__doctrine-name {
+      font-family: var(--ff-serif);
+      font-size: clamp(15px, 2.5vw, 22px);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--gold-light);
+      letter-spacing: 0.12em;
+      margin-bottom: 10px;
+    }
+    .hero__doctrine-sub {
+      font-family: var(--ff-serif);
+      font-size: clamp(12px, 1.8vw, 16px);
+      font-weight: 300;
+      color: var(--text-secondary);
+      letter-spacing: 0.15em;
+    }
+
+    /* — Divider — */
+    .hero__divider {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, var(--gold-dim), transparent);
+      margin: 0 auto 32px;
+      opacity: 0;
+      animation: fade-up 1s var(--ease-portal) 0.4s forwards;
+    }
+
+    /* — Statement — */
+    .hero__statement {
+      max-width: 520px;
+      font-size: clamp(12px, 1.5vw, 14px);
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: var(--text-secondary);
+      line-height: 1.9;
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: fade-up 1s var(--ease-portal) 0.5s forwards;
+    }
+
+    /* — CTA text — */
+    .hero__cta-text {
+      opacity: 0;
+      animation: fade-up 1s var(--ease-portal) 0.65s forwards;
+    }
+    .hero__welcome {
+      font-family: var(--ff-serif);
+      font-size: 15px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--text-primary);
+      letter-spacing: 0.15em;
+      margin-bottom: 6px;
+    }
+    .hero__choose {
+      font-family: var(--ff-body);
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       7b. INVESTOR BRIEF BAND
+    ═══════════════════════════════════════════════════════ */
+    .investor-brief {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 56px 64px;
+      opacity: 0;
+      animation: fade-up 1s var(--ease-portal) 0.72s forwards;
+    }
+    .investor-brief__label {
+      font-family: var(--ff-body);
+      font-size: 8px;
+      font-weight: 500;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 18px;
+    }
+    /* Button wrapper — holds the SVG orbit + the button */
+    .investor-brief__wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* The animated perimeter SVG */
+    .orbit-svg {
+      position: absolute;
+      inset: -5px;
+      width: calc(100% + 10px);
+      height: calc(100% + 10px);
+      pointer-events: none;
+      overflow: visible;
+    }
+    .orbit-rect {
+      fill: none;
+      stroke: var(--gold);
+      stroke-width: 1;
+      stroke-linecap: round;
+      opacity: 0.7;
+    }
+    .orbit-rect-trail {
+      fill: none;
+      stroke: var(--gold-light);
+      stroke-width: 0.5;
+      stroke-linecap: round;
+      opacity: 0.3;
+    }
+    .investor-brief__btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      font-family: var(--ff-body);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: transparent;
+      border: 1px solid var(--border);
+      padding: 15px 32px;
+      cursor: pointer;
+      text-decoration: none;
+      transition:
+        color        0.4s var(--ease-luxury),
+        border-color 0.4s var(--ease-luxury),
+        background   0.4s var(--ease-luxury);
+    }
+    .investor-brief__btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold-glow);
+      opacity: 0;
+      transition: opacity 0.4s var(--ease-luxury);
+    }
+    .investor-brief__btn:hover {
+      color: var(--gold-light);
+      border-color: var(--border-hover);
+    }
+    .investor-brief__btn:hover::before { opacity: 1; }
+    .investor-brief__btn-arrow {
+      font-size: 11px;
+      opacity: 0.7;
+      transition: transform 0.4s var(--ease-luxury), opacity 0.4s;
+    }
+    .investor-brief__btn:hover .investor-brief__btn-arrow {
+      transform: translateX(5px);
+      opacity: 1;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       8. ENTRY CARDS
+    ═══════════════════════════════════════════════════════ */
+    .cards-section {
+      padding: 0 56px 100px;
+      display: flex;
+      gap: 28px;
+      justify-content: center;
+      align-items: stretch;
+    }
+    .entry-card {
+      flex: 1;
+      max-width: 520px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      padding: 52px 48px 44px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition:
+        border-color 0.6s var(--ease-luxury),
+        background   0.6s var(--ease-luxury),
+        transform    0.5s var(--ease-portal);
+      opacity: 0;
+    }
+    .entry-card:nth-child(1) { animation: fade-up 1s var(--ease-portal) 0.75s forwards; }
+    .entry-card:nth-child(2) { animation: fade-up 1s var(--ease-portal) 0.85s forwards; }
+
+    /* Corner accents */
+    .entry-card::before, .entry-card::after {
+      content: '';
+      position: absolute;
+      width: 16px; height: 16px;
+      transition: all 0.5s var(--ease-luxury);
+    }
+    .entry-card::before { top: -1px; left: -1px; border-top: 1px solid var(--gold-dim); border-left: 1px solid var(--gold-dim); }
+    .entry-card::after  { bottom: -1px; right: -1px; border-bottom: 1px solid var(--gold-dim); border-right: 1px solid var(--gold-dim); }
+
+    .entry-card:hover                   { border-color: var(--border-hover); background: var(--surface-2); transform: translateY(-4px); }
+    .entry-card:hover::before,
+    .entry-card:hover::after            { width: 28px; height: 28px; border-color: var(--gold); }
+    .entry-card:hover .card-glow        { opacity: 1; }
+    .entry-card:hover .card__cta-arrow  { transform: translateX(6px); opacity: 1; }
+    .entry-card:hover .card__svg-motif  { opacity: 0.22; }
+
+    .card-glow {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, var(--gold-glow-md), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.7s var(--ease-luxury);
+      pointer-events: none;
+    }
+    .card__svg-motif {
+      position: absolute; bottom: -20px; right: -20px;
+      width: 220px; height: 220px;
+      opacity: 0.1;
+      transition: opacity 0.6s var(--ease-luxury);
+      pointer-events: none;
+    }
+    .card__label {
+      font-family: var(--ff-body); font-size: 8px; font-weight: 500;
+      letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--gold-dim); margin-bottom: 18px;
+    }
+    .card__name {
+      font-family: var(--ff-title);
+      font-size: clamp(26px, 4vw, 42px); font-weight: 600;
+      letter-spacing: 0.18em; color: var(--text-primary);
+      line-height: 1; margin-bottom: 6px;
+    }
+    .card__tagline {
+      font-family: var(--ff-serif); font-size: 14px;
+      font-weight: 300; font-style: italic;
+      color: var(--gold); letter-spacing: 0.12em; margin-bottom: 36px;
+    }
+    .card__divider {
+      width: 32px; height: 1px;
+      background: var(--gold-dim); margin-bottom: 28px; opacity: 0.6;
+    }
+    .card__headline {
+      font-family: var(--ff-body); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-primary); margin-bottom: 12px;
+    }
+    .card__body {
+      font-size: 13px; font-weight: 300; line-height: 1.85;
+      color: var(--text-secondary); letter-spacing: 0.04em; margin-bottom: 44px;
+    }
+    .card__cta {
+      display: inline-flex; align-items: center; gap: 12px;
+      font-family: var(--ff-body); font-size: 9px; font-weight: 500;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--gold);
+      background: transparent; border: none; cursor: pointer; padding: 0;
+    }
+    .card__cta-line {
+      width: 28px; height: 1px; background: var(--gold);
+      transition: width 0.4s var(--ease-luxury);
+    }
+    .entry-card:hover .card__cta-line { width: 44px; }
+    .card__cta-arrow {
+      font-size: 12px; opacity: 0.7;
+      transform: translateX(0);
+      transition: transform 0.4s var(--ease-luxury), opacity 0.4s;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       9. FOOTER
+    ═══════════════════════════════════════════════════════ */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 56px 36px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .footer__note {
+      font-family: var(--ff-body); font-size: 9px; font-weight: 500;
+      letter-spacing: 0.3em; text-transform: uppercase; text-align: center;
+      background: linear-gradient(
+        90deg, var(--gold-dim) 0%, var(--gold-light) 30%,
+        #F5E0A0 50%, var(--gold-light) 70%, var(--gold-dim) 100%
+      );
+      background-size: 220% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gold-shimmer 5s linear infinite;
+    }
+    .footer__copy {
+      font-family: var(--ff-body); font-size: 9px; font-weight: 500;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--text-secondary); text-align: center;
+      line-height: 2; opacity: 0.72;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       10. KEYFRAMES
+    ═══════════════════════════════════════════════════════ */
+    @keyframes fade-up         { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes rotate-cw       { to { transform: rotate(360deg); } }
+    @keyframes rotate-ccw      { to { transform: rotate(-360deg); } }
+    @keyframes pulse-line      { 0%,100% { opacity: 0.08; } 50% { opacity: 0.14; } }
+    @keyframes ambient-breathe { 0%,100% { opacity: 0.8; } 50% { opacity: 1; } }
+    @keyframes gold-shimmer    { 0% { background-position: 220% center; } 100% { background-position: 0% center; } }
+    @keyframes metal-shimmer   {
+      0%   { background-position: 100% center; }
+      40%  { background-position: 15%  center; }
+      60%  { background-position: 15%  center; }
+      100% { background-position: 100% center; }
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       11. RESPONSIVE — TABLET  (≤ 900px)
+    ═══════════════════════════════════════════════════════ */
+    @media (max-width: 900px) {
+      .top-bar       { padding: 20px 32px; }
+      .hero          { padding: 60px 32px; }
+      .cards-section { flex-direction: column; align-items: center; padding: 0 32px 80px; }
+      .entry-card    { max-width: 100%; width: 100%; }
+      .footer        { padding: 24px 32px 28px; }
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       12. RESPONSIVE — MOBILE  (≤ 600px)
+    ═══════════════════════════════════════════════════════ */
+    @media (max-width: 600px) {
+      /* Top bar */
+      .top-bar              { padding: 16px 20px; }
+      .top-bar__system-name { font-size: 7.5px; letter-spacing: 0.2em; }
+      .top-bar__subtitle    { display: none; }
+      .top-bar__actions     { gap: 10px; }
+      .btn-access           { padding: 8px 12px; font-size: 8px; letter-spacing: 0.18em; }
+
+      /* Page */
+      .page { padding-top: 68px; }
+
+      /* Hero */
+      .hero           { padding: 48px 24px 40px; }
+      .hero__title    { font-size: clamp(28px, 8vw, 44px); letter-spacing: 0.2em; margin-bottom: 28px; }
+      .hero__doctrine-label { font-size: 7.5px; }
+      .hero__statement      { font-size: 12px; letter-spacing: 0.06em; margin-bottom: 36px; }
+      .hero__statement br   { display: none; }
+      .hero__welcome        { font-size: 13px; }
+      .hero__choose         { font-size: 8px; letter-spacing: 0.25em; }
+
+      /* Cards */
+      .cards-section  { padding: 0 20px 64px; gap: 20px; }
+      .entry-card     { padding: 36px 28px 32px; }
+      .card__name     { font-size: clamp(24px, 6vw, 34px); }
+      .card__tagline  { font-size: 13px; margin-bottom: 24px; }
+      .card__body     { font-size: 12px; margin-bottom: 32px; }
+
+      .investor-brief  { padding: 16px 20px 52px; }
+      .investor-brief__btn { font-size: 8px; letter-spacing: 0.25em; padding: 13px 24px; }
+
+      /* Footer */
+      .footer         { padding: 20px 20px 24px; gap: 8px; }
+      .footer__note   { font-size: 7.5px; letter-spacing: 0.18em; }
+      .footer__copy   { font-size: 7px; letter-spacing: 0.14em; line-height: 1.9; }
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       13. RESPONSIVE — SMALL MOBILE  (≤ 380px)
+    ═══════════════════════════════════════════════════════ */
+    @media (max-width: 380px) {
+      .hero__title       { font-size: clamp(24px, 7.5vw, 34px); letter-spacing: 0.14em; }
+      .btn-access--member{ display: none; }
+      .card__svg-motif   { width: 160px; height: 160px; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- 1 · AMBIENT LIGHT -->
+  <div class="ambient-light" aria-hidden="true"></div>
+
+  <!-- 2 · BACKGROUND GEOMETRY -->
+  <div class="bg-geometry" aria-hidden="true">
+    <svg viewBox="0 0 1100 1100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="550" cy="550" r="520" stroke="#C9A84C" stroke-width="0.6"/>
+      <g class="bg-ring-outer">
+        <circle cx="550" cy="550" r="480" stroke="#C9A84C" stroke-width="0.4" stroke-dasharray="4 60"/>
+        <polygon points="550,72 987,782 113,782"   stroke="#C9A84C" stroke-width="0.5" fill="none"/>
+        <polygon points="550,1028 113,318 987,318"  stroke="#C9A84C" stroke-width="0.5" fill="none"/>
+      </g>
+      <g class="bg-ring-inner">
+        <circle cx="550" cy="550" r="380" stroke="#C9A84C" stroke-width="0.4"/>
+        <polygon points="550,172 877,362 877,742 550,932 223,742 223,362" stroke="#C9A84C" stroke-width="0.5" fill="none"/>
+        <circle cx="550" cy="550" r="240" stroke="#C9A84C" stroke-width="0.4" stroke-dasharray="2 28"/>
+      </g>
+      <line x1="550" y1="30"  x2="550" y2="1070" stroke="#C9A84C" stroke-width="0.3" stroke-dasharray="1 18"/>
+      <line x1="30"  y1="550" x2="1070" y2="550" stroke="#C9A84C" stroke-width="0.3" stroke-dasharray="1 18"/>
+      <circle cx="550" cy="550" r="80" stroke="#C9A84C" stroke-width="0.6"/>
+      <circle cx="550" cy="550" r="6"  fill="#C9A84C" opacity="0.5"/>
+    </svg>
+  </div>
+
+  <!-- 3 · TOP BAR -->
+  <header class="top-bar" role="banner">
+    <div class="top-bar__identity">
+      <div class="top-bar__system-name">AMO Proprietary Luxury Core System</div>
+      <div class="top-bar__subtitle">Luxury Production Intelligence System</div>
+    </div>
+    <nav class="top-bar__actions" aria-label="Access">
+      <button class="btn-access btn-access--member" disabled aria-disabled="true">Member Access</button>
+      <button class="btn-access btn-access--request">Request Access</button>
+    </nav>
+  </header>
+
+  <!-- 4 · PAGE -->
+  <div class="page">
+
+    <!-- HERO -->
+    <main class="hero" aria-labelledby="hero-title">
+      <h1 class="hero__title" id="hero-title">
+        <span class="amo">AMO</span>
+        <span class="hero__title-rule" aria-hidden="true"></span>
+        <span class="core">CORE</span>
+      </h1>
+      <div class="hero__doctrine">
+        <div class="hero__doctrine-label">Guided by</div>
+        <div class="hero__doctrine-name">ARCHAIC MODERNITY™</div>
+        <div class="hero__doctrine-sub">Ancient intelligence. Contemporary craft. Future production.</div>
+      </div>
+      <div class="hero__divider" aria-hidden="true"></div>
+      <p class="hero__statement">
+        A proprietary infrastructure for cultural intelligence,<br>
+        digital craft, and luxury creation.
+      </p>
+      <div class="hero__cta-text">
+        <div class="hero__welcome">Welcome to AMO Core.</div>
+        <div class="hero__choose">Choose your environment.</div>
+      </div>
+    </main>
+
+    <!-- INVESTOR BRIEF -->
+    <div class="investor-brief" aria-label="Investor access">
+      <div class="investor-brief__label">Private Investor Brief</div>
+      <div class="investor-brief__wrap">
+        <!-- Animated gold perimeter SVG — JS sets dasharray/offset after measuring button -->
+        <svg class="orbit-svg" id="orbit-svg" aria-hidden="true">
+          <rect class="orbit-rect-trail" id="orbit-trail" rx="0"/>
+          <rect class="orbit-rect" id="orbit-path" rx="0"/>
+        </svg>
+        <a href="amo-investor.html" class="investor-brief__btn" id="investor-btn">
+          View Brand Vision Deck
+          <span class="investor-brief__btn-arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ENTRY CARDS -->
+    <section class="cards-section" aria-label="Environment portals">
+
+      <!-- ATLAS -->
+      <article class="entry-card" aria-label="Atlas — The Cultural Data Lake">
+        <div class="card-glow" aria-hidden="true"></div>
+        <svg class="card__svg-motif" viewBox="0 0 220 220" fill="none" aria-hidden="true">
+          <circle cx="110" cy="110" r="100" stroke="#C9A84C" stroke-width="0.6" stroke-dasharray="6 14"/>
+          <circle cx="110" cy="110" r="72"  stroke="#C9A84C" stroke-width="0.5" stroke-dasharray="3 10"/>
+          <circle cx="110" cy="110" r="44"  stroke="#C9A84C" stroke-width="0.4"/>
+          <line x1="110" y1="10"  x2="110" y2="210" stroke="#C9A84C" stroke-width="0.4" stroke-dasharray="2 8"/>
+          <line x1="10"  y1="110" x2="210" y2="110" stroke="#C9A84C" stroke-width="0.4" stroke-dasharray="2 8"/>
+          <line x1="39"  y1="39"  x2="181" y2="181" stroke="#C9A84C" stroke-width="0.3" stroke-dasharray="2 8"/>
+          <line x1="181" y1="39"  x2="39"  y2="181" stroke="#C9A84C" stroke-width="0.3" stroke-dasharray="2 8"/>
+          <circle cx="110" cy="10"  r="2.5" fill="#C9A84C"/>
+          <circle cx="210" cy="110" r="2.5" fill="#C9A84C"/>
+          <circle cx="110" cy="210" r="2.5" fill="#C9A84C"/>
+          <circle cx="10"  cy="110" r="2.5" fill="#C9A84C"/>
+          <circle cx="39"  cy="39"  r="2"   fill="#C9A84C"/>
+          <circle cx="181" cy="39"  r="2"   fill="#C9A84C"/>
+          <circle cx="181" cy="181" r="2"   fill="#C9A84C"/>
+          <circle cx="39"  cy="181" r="2"   fill="#C9A84C"/>
+          <circle cx="110" cy="110" r="4"   fill="#C9A84C" opacity="0.9"/>
+          <circle cx="110" cy="110" r="8"   stroke="#C9A84C" stroke-width="0.6"/>
+          <line x1="110" y1="10"  x2="39"  y2="39"  stroke="#C9A84C" stroke-width="0.3"/>
+          <line x1="110" y1="10"  x2="181" y2="39"  stroke="#C9A84C" stroke-width="0.3"/>
+          <line x1="39"  y1="39"  x2="10"  y2="110" stroke="#C9A84C" stroke-width="0.3"/>
+          <line x1="181" y1="39"  x2="210" y2="110" stroke="#C9A84C" stroke-width="0.3"/>
+          <line x1="10"  y1="110" x2="39"  y2="181" stroke="#C9A84C" stroke-width="0.3"/>
+          <line x1="210" y1="110" x2="181" y2="181" stroke="#C9A84C" stroke-width="0.3"/>
+          <line x1="39"  y1="181" x2="110" y2="210" stroke="#C9A84C" stroke-width="0.3"/>
+          <line x1="181" y1="181" x2="110" y2="210" stroke="#C9A84C" stroke-width="0.3"/>
+        </svg>
+        <div class="card__label">Environment 01</div>
+        <div class="card__name">ATLAS</div>
+        <div class="card__tagline">The Cultural Data Lake</div>
+        <div class="card__divider" aria-hidden="true"></div>
+        <div class="card__headline">Cultural memory, structured.</div>
+        <p class="card__body">
+          Explore curated motifs, patterns, geometries, and cultural form data from the world's heritage systems.
+        </p>
+        <button class="card__cta" aria-label="Enter Atlas environment">
+          <span class="card__cta-line" aria-hidden="true"></span>
+          Enter Atlas
+          <span class="card__cta-arrow" aria-hidden="true">→</span>
+        </button>
+      </article>
+
+      <!-- ENGINE -->
+      <article class="entry-card" aria-label="Engine — The Generative Studio">
+        <div class="card-glow" aria-hidden="true"></div>
+        <svg class="card__svg-motif" viewBox="0 0 220 220" fill="none" aria-hidden="true">
+          <rect x="10" y="10" width="200" height="200" stroke="#C9A84C" stroke-width="0.6"/>
+          <rect x="10" y="10" width="200" height="200" stroke="#C9A84C" stroke-width="0.4" transform="rotate(45 110 110)"/>
+          <rect x="42" y="42" width="136" height="136" stroke="#C9A84C" stroke-width="0.5"/>
+          <line x1="10"  y1="10"  x2="210" y2="210" stroke="#C9A84C" stroke-width="0.4"/>
+          <line x1="210" y1="10"  x2="10"  y2="210" stroke="#C9A84C" stroke-width="0.4"/>
+          <line x1="10"  y1="110" x2="210" y2="110" stroke="#C9A84C" stroke-width="0.35" stroke-dasharray="3 6"/>
+          <line x1="110" y1="10"  x2="110" y2="210" stroke="#C9A84C" stroke-width="0.35" stroke-dasharray="3 6"/>
+          <circle cx="110" cy="110" r="56" stroke="#C9A84C" stroke-width="0.5"/>
+          <circle cx="110" cy="110" r="30" stroke="#C9A84C" stroke-width="0.4" stroke-dasharray="2 5"/>
+          <rect x="7"   y="7"   width="6" height="6" fill="#C9A84C"/>
+          <rect x="207" y="7"   width="6" height="6" fill="#C9A84C"/>
+          <rect x="7"   y="207" width="6" height="6" fill="#C9A84C"/>
+          <rect x="207" y="207" width="6" height="6" fill="#C9A84C"/>
+          <circle cx="110" cy="110" r="5"  fill="#C9A84C" opacity="0.9"/>
+          <circle cx="110" cy="110" r="10" stroke="#C9A84C" stroke-width="0.6"/>
+          <circle cx="110" cy="10"  r="2.5" fill="#C9A84C"/>
+          <circle cx="110" cy="210" r="2.5" fill="#C9A84C"/>
+          <circle cx="10"  cy="110" r="2.5" fill="#C9A84C"/>
+          <circle cx="210" cy="110" r="2.5" fill="#C9A84C"/>
+        </svg>
+        <div class="card__label">Environment 02</div>
+        <div class="card__name">ENGINE</div>
+        <div class="card__tagline">The Generative Studio</div>
+        <div class="card__divider" aria-hidden="true"></div>
+        <div class="card__headline">Digital craft, refined.</div>
+        <p class="card__body">
+          Transform lines, motifs, surfaces, and creative sources into craft-ready design outputs.
+        </p>
+        <button class="card__cta" aria-label="Enter Engine environment">
+          <span class="card__cta-line" aria-hidden="true"></span>
+          Enter Engine
+          <span class="card__cta-arrow" aria-hidden="true">→</span>
+        </button>
+      </article>
+
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer" role="contentinfo">
+      <p class="footer__note">
+        Private beta access for cultural, creative, and craft-driven professionals.
+      </p>
+      <p class="footer__copy">
+        © 2026 Anadolu Modern®. All rights reserved.<br>
+        AMO CORE and ARCHAIC MODERNITY™ are proprietary systems by Anadolu Modern®.
+      </p>
+    </footer>
+
+  </div><!-- .page -->
+
+  <!-- ═══════════════════════════════════════════════════════
+       ACCESS GUARD
+       Redirects back to gate if session is not active.
+       Remove this block to bypass gate in development.
+  ═══════════════════════════════════════════════════════ -->
+  <script>
+    if (sessionStorage.getItem('amo_access') !== 'granted') {
+      window.location.replace('amo-gate.html');
+    }
+
+    /* ── Animated gold perimeter orbit around investor button ── */
+    (function () {
+      const btn    = document.getElementById('investor-btn');
+      const svg    = document.getElementById('orbit-svg');
+      const path   = document.getElementById('orbit-path');
+      const trail  = document.getElementById('orbit-trail');
+
+      function setup() {
+        const w = btn.offsetWidth  + 10;
+        const h = btn.offsetHeight + 10;
+        const P = 2 * (w + h); // perimeter
+
+        [path, trail].forEach(el => {
+          el.setAttribute('x', 0);
+          el.setAttribute('y', 0);
+          el.setAttribute('width', w);
+          el.setAttribute('height', h);
+        });
+        svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+
+        /* Dash = ~18% of perimeter, gap = rest */
+        const dash  = P * 0.18;
+        const gap   = P - dash;
+        const tdash = P * 0.10;
+        const tgap  = P - tdash;
+
+        path.setAttribute('stroke-dasharray',  `${dash} ${gap}`);
+        path.setAttribute('stroke-dashoffset', '0');
+        trail.setAttribute('stroke-dasharray',  `${tdash} ${tgap}`);
+        trail.setAttribute('stroke-dashoffset', `${dash * 0.6}`);
+
+        /* Animate via CSS custom property */
+        path.style.animation  = `orbit-run ${P / 90}s linear infinite`;
+        trail.style.animation = `orbit-run ${P / 70}s linear infinite reverse`;
+
+        /* Inject keyframe if not already present */
+        if (!document.getElementById('orbit-kf')) {
+          const st = document.createElement('style');
+          st.id = 'orbit-kf';
+          st.textContent = `
+            @keyframes orbit-run {
+              from { stroke-dashoffset: 0; }
+              to   { stroke-dashoffset: -${P}px; }
+            }`;
+          document.head.appendChild(st);
+        }
+      }
+
+      /* Run after fonts/layout settle */
+      if (document.readyState === 'complete') { setup(); }
+      else { window.addEventListener('load', setup); }
+      window.addEventListener('resize', setup);
+    })();
+  </script>
+
+</body>
+</html>

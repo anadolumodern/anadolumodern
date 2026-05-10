@@ -72,7 +72,9 @@
     ═══════════════════════════════════════════════════════ */
     .bg-geometry {
       position: fixed;
-      inset: 0;
+      top: 80px;    /* below top-bar border-bottom */
+      bottom: 72px; /* above footer border-top */
+      left: 0; right: 0;
       pointer-events: none;
       z-index: 0;
       overflow: hidden;
@@ -82,7 +84,7 @@
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
       width: 1100px; height: 1100px;
-      opacity: 0.08;
+      opacity: 0.28;
       animation: pulse-line 8s ease-in-out infinite;
     }
     .bg-ring-outer { animation: rotate-cw  120s linear infinite; transform-origin: center; }
@@ -345,14 +347,35 @@
       opacity: 0;
       animation: fade-up 1s var(--ease-portal) 0.72s forwards;
     }
-    .investor-brief__label {
+    /* Pair — both buttons + label divider in a row */
+    .investor-brief__pair {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+    /* Central vertical divider with label text ON the line */
+    .investor-brief__divider {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 36px;
+      flex-shrink: 0;
+    }
+    .investor-brief__divider-line {
+      width: 1px;
+      height: 20px;
+      background: linear-gradient(to bottom, transparent, var(--gold-dim) 50%, transparent);
+      opacity: 0.5;
+    }
+    .investor-brief__divider-label {
       font-family: var(--ff-body);
-      font-size: 8px;
+      font-size: 7px;
       font-weight: 500;
-      letter-spacing: 0.38em;
+      letter-spacing: 0.32em;
       text-transform: uppercase;
       color: var(--gold-dim);
-      margin-bottom: 18px;
+      padding: 7px 0;
+      white-space: nowrap;
     }
     /* Button wrapper — holds the SVG orbit + the button */
     .investor-brief__wrap {
@@ -400,6 +423,7 @@
       padding: 15px 32px;
       cursor: pointer;
       text-decoration: none;
+      white-space: nowrap;
       transition:
         color        0.4s var(--ease-luxury),
         border-color 0.4s var(--ease-luxury),
@@ -571,7 +595,7 @@
     @keyframes fade-up         { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes rotate-cw       { to { transform: rotate(360deg); } }
     @keyframes rotate-ccw      { to { transform: rotate(-360deg); } }
-    @keyframes pulse-line      { 0%,100% { opacity: 0.08; } 50% { opacity: 0.14; } }
+    @keyframes pulse-line      { 0%,100% { opacity: 0.28; } 50% { opacity: 0.36; } }
     @keyframes ambient-breathe { 0%,100% { opacity: 0.8; } 50% { opacity: 1; } }
     @keyframes gold-shimmer    { 0% { background-position: 220% center; } 100% { background-position: 0% center; } }
     @keyframes metal-shimmer   {
@@ -590,12 +614,16 @@
       .cards-section { flex-direction: column; align-items: center; padding: 0 32px 80px; }
       .entry-card    { max-width: 100%; width: 100%; }
       .footer        { padding: 24px 32px 28px; }
+      .investor-brief__divider { padding: 0 24px; }
     }
 
     /* ═══════════════════════════════════════════════════════
-       12. RESPONSIVE — MOBILE  (≤ 600px)
+       12. RESPONSIVE — MOBILE  (≤ 700px)
     ═══════════════════════════════════════════════════════ */
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
+      /* bg-geometry: narrower containment */
+      .bg-geometry { top: 64px; bottom: 56px; }
+
       /* Top bar */
       .top-bar              { padding: 16px 20px; }
       .top-bar__system-name { font-size: 7.5px; letter-spacing: 0.2em; }
@@ -604,26 +632,40 @@
       .btn-access           { padding: 8px 12px; font-size: 8px; letter-spacing: 0.18em; }
 
       /* Page */
-      .page { padding-top: 68px; }
+      .page { padding-top: 64px; }
 
       /* Hero */
-      .hero           { padding: 48px 24px 40px; }
+      .hero           { padding: 44px 24px 36px; }
       .hero__title    { font-size: clamp(28px, 8vw, 44px); letter-spacing: 0.2em; margin-bottom: 28px; }
       .hero__doctrine-label { font-size: 7.5px; }
+      .hero__doctrine-name  { font-size: clamp(14px, 4vw, 20px); }
       .hero__statement      { font-size: 12px; letter-spacing: 0.06em; margin-bottom: 36px; }
       .hero__statement br   { display: none; }
       .hero__welcome        { font-size: 13px; }
       .hero__choose         { font-size: 8px; letter-spacing: 0.25em; }
 
+      /* Investor brief — pair stacks vertically */
+      .investor-brief       { padding: 16px 20px 44px; }
+      .investor-brief__pair { flex-direction: column; align-items: center; gap: 0; }
+      /* Divider becomes horizontal on mobile */
+      .investor-brief__divider {
+        flex-direction: row;
+        align-items: center;
+        padding: 16px 0;
+      }
+      .investor-brief__divider-line {
+        width: 36px; height: 1px;
+        background: linear-gradient(to right, transparent, var(--gold-dim) 50%, transparent);
+      }
+      .investor-brief__divider-label { padding: 0 10px; font-size: 6.5px; }
+      .investor-brief__btn  { font-size: 8px; letter-spacing: 0.22em; padding: 13px 22px; }
+
       /* Cards */
-      .cards-section  { padding: 0 20px 64px; gap: 20px; }
-      .entry-card     { padding: 36px 28px 32px; }
+      .cards-section  { padding: 0 20px 64px; gap: 20px; flex-direction: column; align-items: stretch; }
+      .entry-card     { padding: 36px 28px 32px; max-width: 100%; }
       .card__name     { font-size: clamp(24px, 6vw, 34px); }
       .card__tagline  { font-size: 13px; margin-bottom: 24px; }
       .card__body     { font-size: 12px; margin-bottom: 32px; }
-
-      .investor-brief  { padding: 16px 20px 52px; }
-      .investor-brief__btn { font-size: 8px; letter-spacing: 0.25em; padding: 13px 24px; }
 
       /* Footer */
       .footer         { padding: 20px 20px 24px; gap: 8px; }
@@ -638,6 +680,7 @@
       .hero__title       { font-size: clamp(24px, 7.5vw, 34px); letter-spacing: 0.14em; }
       .btn-access--member{ display: none; }
       .card__svg-motif   { width: 160px; height: 160px; }
+      .investor-brief__btn { font-size: 7.5px; padding: 12px 16px; letter-spacing: 0.18em; }
     }
 
   </style>
@@ -706,19 +749,41 @@
       </div>
     </main>
 
-    <!-- INVESTOR BRIEF -->
+    <!-- INVESTOR BRIEF PAIR -->
     <div class="investor-brief" aria-label="Investor access">
-      <div class="investor-brief__label">Private Investor Brief</div>
-      <div class="investor-brief__wrap">
-        <!-- Animated gold perimeter SVG — JS sets dasharray/offset after measuring button -->
-        <svg class="orbit-svg" id="orbit-svg" aria-hidden="true">
-          <rect class="orbit-rect-trail" id="orbit-trail" rx="0"/>
-          <rect class="orbit-rect" id="orbit-path" rx="0"/>
-        </svg>
-        <a href="amo-investor.html" class="investor-brief__btn" id="investor-btn">
-          View Brand Vision Deck
-          <span class="investor-brief__btn-arrow">→</span>
-        </a>
+      <div class="investor-brief__pair">
+
+        <!-- Button 1: Brand Vision Deck -->
+        <div class="investor-brief__wrap">
+          <svg class="orbit-svg" id="orbit-svg-1" aria-hidden="true">
+            <rect class="orbit-rect-trail" id="orbit-trail-1" rx="0"/>
+            <rect class="orbit-rect"       id="orbit-path-1"  rx="0"/>
+          </svg>
+          <a href="amo-investor.html" class="investor-brief__btn" id="investor-btn-1">
+            BRAND VISION DECK
+            <span class="investor-brief__btn-arrow">→</span>
+          </a>
+        </div>
+
+        <!-- Central divider — "Private Investor Brief" on the gold line -->
+        <div class="investor-brief__divider">
+          <div class="investor-brief__divider-line"></div>
+          <span class="investor-brief__divider-label">Private Investor Brief</span>
+          <div class="investor-brief__divider-line"></div>
+        </div>
+
+        <!-- Button 2: Technology Vision -->
+        <div class="investor-brief__wrap">
+          <svg class="orbit-svg" id="orbit-svg-2" aria-hidden="true">
+            <rect class="orbit-rect-trail" id="orbit-trail-2" rx="0"/>
+            <rect class="orbit-rect"       id="orbit-path-2"  rx="0"/>
+          </svg>
+          <a href="amo-core.html" class="investor-brief__btn" id="investor-btn-2">
+            TECHNOLOGY VISION DECK
+            <span class="investor-brief__btn-arrow">→</span>
+          </a>
+        </div>
+
       </div>
     </div>
 
@@ -834,58 +899,53 @@
       window.location.replace('index.html');
     }
 
-    /* ── Animated gold perimeter orbit around investor button ── */
+    /* ── Animated gold perimeter orbit — handles BOTH buttons ── */
     (function () {
-      const btn    = document.getElementById('investor-btn');
-      const svg    = document.getElementById('orbit-svg');
-      const path   = document.getElementById('orbit-path');
-      const trail  = document.getElementById('orbit-trail');
+      function setupOrbit(btnId, svgId, pathId, trailId) {
+        const btn   = document.getElementById(btnId);
+        const svg   = document.getElementById(svgId);
+        const path  = document.getElementById(pathId);
+        const trail = document.getElementById(trailId);
+        if (!btn || !svg || !path || !trail) return;
 
-      function setup() {
-        const w = btn.offsetWidth  + 10;
-        const h = btn.offsetHeight + 10;
-        const P = 2 * (w + h); // perimeter
+        function setup() {
+          const w = btn.offsetWidth  + 10;
+          const h = btn.offsetHeight + 10;
+          const P = 2 * (w + h);
 
-        [path, trail].forEach(el => {
-          el.setAttribute('x', 0);
-          el.setAttribute('y', 0);
-          el.setAttribute('width', w);
-          el.setAttribute('height', h);
-        });
-        svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+          [path, trail].forEach(el => {
+            el.setAttribute('x', 0); el.setAttribute('y', 0);
+            el.setAttribute('width', w); el.setAttribute('height', h);
+          });
+          svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
 
-        /* Dash = ~18% of perimeter, gap = rest */
-        const dash  = P * 0.18;
-        const gap   = P - dash;
-        const tdash = P * 0.10;
-        const tgap  = P - tdash;
+          const dash  = P * 0.18; const gap  = P - dash;
+          const tdash = P * 0.10; const tgap = P - tdash;
 
-        path.setAttribute('stroke-dasharray',  `${dash} ${gap}`);
-        path.setAttribute('stroke-dashoffset', '0');
-        trail.setAttribute('stroke-dasharray',  `${tdash} ${tgap}`);
-        trail.setAttribute('stroke-dashoffset', `${dash * 0.6}`);
+          path.setAttribute('stroke-dasharray',  `${dash} ${gap}`);
+          path.setAttribute('stroke-dashoffset', '0');
+          trail.setAttribute('stroke-dasharray',  `${tdash} ${tgap}`);
+          trail.setAttribute('stroke-dashoffset', `${dash * 0.6}`);
 
-        /* Animate via CSS custom property */
-        path.style.animation  = `orbit-run ${P / 90}s linear infinite`;
-        trail.style.animation = `orbit-run ${P / 70}s linear infinite reverse`;
+          const kfId = 'orbit-kf-' + btnId;
+          path.style.animation  = `orbit-run-${btnId} ${P / 90}s linear infinite`;
+          trail.style.animation = `orbit-run-${btnId} ${P / 70}s linear infinite reverse`;
 
-        /* Inject keyframe if not already present */
-        if (!document.getElementById('orbit-kf')) {
-          const st = document.createElement('style');
-          st.id = 'orbit-kf';
-          st.textContent = `
-            @keyframes orbit-run {
-              from { stroke-dashoffset: 0; }
-              to   { stroke-dashoffset: -${P}px; }
-            }`;
-          document.head.appendChild(st);
+          if (!document.getElementById(kfId)) {
+            const st = document.createElement('style');
+            st.id = kfId;
+            st.textContent = `@keyframes orbit-run-${btnId}{from{stroke-dashoffset:0;}to{stroke-dashoffset:-${P}px;}}`;
+            document.head.appendChild(st);
+          }
         }
+
+        if (document.readyState === 'complete') { setup(); }
+        else { window.addEventListener('load', setup); }
+        window.addEventListener('resize', setup);
       }
 
-      /* Run after fonts/layout settle */
-      if (document.readyState === 'complete') { setup(); }
-      else { window.addEventListener('load', setup); }
-      window.addEventListener('resize', setup);
+      setupOrbit('investor-btn-1', 'orbit-svg-1', 'orbit-path-1', 'orbit-trail-1');
+      setupOrbit('investor-btn-2', 'orbit-svg-2', 'orbit-path-2', 'orbit-trail-2');
     })();
   </script>
 

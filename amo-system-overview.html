@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AMO CORE — System Overview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant:ital,wght@0,300;1,300&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ═══════════════════════════════════════════════════════
+       1. DESIGN TOKENS
+    ═══════════════════════════════════════════════════════ */
+    :root {
+      --obsidian:      #07080D;
+      --surface:       #0E0F16;
+      --surface-2:     #131520;
+      --border:        rgba(180,150,80,0.15);
+      --border-hover:  rgba(180,150,80,0.42);
+      --gold:          #C9A84C;
+      --gold-light:    #E2C87A;
+      --gold-dim:      #8A6F34;
+      --gold-glow:     rgba(201,168,76,0.10);
+      --gold-glow-md:  rgba(201,168,76,0.18);
+      --text-primary:  #EDE8DC;
+      --text-secondary:#9A9589;
+      --text-dim:      #5A5650;
+      --ff-title:      'Cinzel', serif;
+      --ff-serif:      'Cormorant', serif;
+      --ff-body:       'Jost', sans-serif;
+      --ease-luxury:   cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --ease-portal:   cubic-bezier(0.16, 1, 0.3, 1);
+      --top-h:         80px;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       2. RESET & BASE
+    ═══════════════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--obsidian);
+      color: var(--text-primary);
+      font-family: var(--ff-body);
+      font-weight: 300;
+      letter-spacing: 0.02em;
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       3. AMBIENT LIGHT
+    ═══════════════════════════════════════════════════════ */
+    .ambient-light {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background: radial-gradient(
+        ellipse 65% 50% at 50% 52%,
+        rgba(180,130,40,0.08) 0%,
+        rgba(150,105,30,0.04) 40%,
+        transparent 72%
+      );
+      animation: breathe 11s ease-in-out infinite;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       4. BACKGROUND GEOMETRY — quiet, non-competing
+    ═══════════════════════════════════════════════════════ */
+    .bg-geometry {
+      position: fixed; top: var(--top-h); bottom: 0; left: 0; right: 0;
+      pointer-events: none; z-index: 0; overflow: hidden;
+    }
+    .bg-geometry svg {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 860px; height: 860px;
+      opacity: 0.07;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       5. TOP BAR
+    ═══════════════════════════════════════════════════════ */
+    .top-bar {
+      position: fixed; top: 0; left: 0; right: 0; height: var(--top-h);
+      z-index: 500;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 56px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(7,8,13,0.82);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    }
+    .top-bar__identity { display: flex; flex-direction: column; }
+    .top-bar__system-name {
+      font-family: var(--ff-title); font-size: 9.5px; font-weight: 500;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--gold); line-height: 1; margin-bottom: 5px;
+    }
+    .top-bar__subtitle {
+      font-family: var(--ff-body); font-size: 8.5px; font-weight: 400;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+    .btn-back {
+      font-family: var(--ff-body); font-size: 9px; font-weight: 400;
+      letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--gold-dim);
+      background: transparent; border: none; cursor: pointer;
+      display: flex; align-items: center; gap: 10px; padding: 8px 0;
+      transition: color 0.3s var(--ease-luxury); text-decoration: none;
+    }
+    .btn-back:hover { color: var(--gold); }
+    .btn-back__arrow { font-size: 11px; transition: transform 0.3s var(--ease-luxury); }
+    .btn-back:hover .btn-back__arrow { transform: translateX(-4px); }
+
+    /* ═══════════════════════════════════════════════════════
+       6. PAGE WRAPPER
+    ═══════════════════════════════════════════════════════ */
+    .page {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      padding-top: var(--top-h);
+      display: flex; flex-direction: column;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       7. PAGE HEADER
+    ═══════════════════════════════════════════════════════ */
+    .page-header {
+      text-align: center;
+      padding: 68px 40px 44px;
+      opacity: 0;
+      animation: fade-up 0.9s var(--ease-portal) 0.05s forwards;
+    }
+    .page-header__eyebrow {
+      font-family: var(--ff-body); font-size: 8px; font-weight: 500;
+      letter-spacing: 0.42em; text-transform: uppercase;
+      color: var(--gold-dim); margin-bottom: 14px;
+    }
+    .page-header__title {
+      font-family: var(--ff-title); font-size: clamp(20px, 2.8vw, 32px);
+      font-weight: 500; letter-spacing: 0.24em;
+      color: var(--text-primary); margin-bottom: 16px; line-height: 1;
+    }
+    .page-header__rule {
+      width: 1px; height: 36px;
+      background: linear-gradient(to bottom, var(--gold-dim), transparent);
+      margin: 0 auto 16px;
+    }
+    .page-header__subtitle {
+      font-family: var(--ff-serif);
+      font-size: clamp(13px, 1.6vw, 16px);
+      font-weight: 300; font-style: italic;
+      color: var(--text-secondary); letter-spacing: 0.15em;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       8. DIAGRAM CONTAINER
+    ═══════════════════════════════════════════════════════ */
+    .diagram {
+      flex: 1;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 40px 88px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       9. DOCTRINE BAND
+    ═══════════════════════════════════════════════════════ */
+    .doctrine-band {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: linear-gradient(135deg,
+        rgba(201,168,76,0.05) 0%,
+        rgba(201,168,76,0.02) 40%,
+        transparent 70%
+      );
+      position: relative;
+      padding: 28px 52px;
+      display: flex; flex-direction: column;
+      align-items: center; text-align: center;
+      opacity: 0;
+      animation: fade-up 0.9s var(--ease-portal) 0.12s forwards;
+    }
+    /* Top accent line */
+    .doctrine-band::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 8%; right: 8%; height: 1px;
+      background: linear-gradient(90deg,
+        transparent, var(--gold-dim) 25%, var(--gold) 50%, var(--gold-dim) 75%, transparent
+      );
+      opacity: 0.55;
+    }
+    /* Corner TL */
+    .doctrine-band::after {
+      content: '';
+      position: absolute;
+      top: -1px; left: -1px;
+      width: 20px; height: 20px;
+      border-top: 1px solid var(--gold-dim);
+      border-left: 1px solid var(--gold-dim);
+    }
+    .doctrine-band__corner-br {
+      position: absolute; bottom: -1px; right: -1px;
+      width: 20px; height: 20px;
+      border-bottom: 1px solid var(--gold-dim);
+      border-right: 1px solid var(--gold-dim);
+    }
+    .doctrine-band__eyebrow {
+      font-family: var(--ff-body); font-size: 7.5px; font-weight: 500;
+      letter-spacing: 0.42em; text-transform: uppercase;
+      color: var(--gold-dim); margin-bottom: 10px;
+    }
+    .doctrine-band__name {
+      font-family: var(--ff-title); font-size: clamp(17px, 2.4vw, 26px);
+      font-weight: 500; letter-spacing: 0.26em;
+      color: var(--gold-light); margin-bottom: 10px;
+    }
+    .doctrine-band__tagline {
+      font-family: var(--ff-serif); font-size: clamp(13px, 1.7vw, 16px);
+      font-weight: 300; font-style: italic;
+      color: var(--text-primary); letter-spacing: 0.18em; margin-bottom: 8px;
+    }
+    .doctrine-band__desc {
+      font-family: var(--ff-body); font-size: 10.5px; font-weight: 300;
+      color: var(--text-secondary); letter-spacing: 0.08em;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       10. VERTICAL CONNECTORS
+    ═══════════════════════════════════════════════════════ */
+    .connector-v {
+      width: 1px; height: 52px;
+      flex-shrink: 0;
+      transform-origin: top center;
+      opacity: 0;
+    }
+    .connector-v--doctrine {
+      background: linear-gradient(to bottom, var(--gold), var(--gold-dim));
+      animation: draw-v 0.5s var(--ease-luxury) 0.78s forwards;
+    }
+    .connector-v--core {
+      background: linear-gradient(to bottom, var(--gold-dim), var(--gold));
+      animation: draw-v 0.5s var(--ease-luxury) 1.36s forwards;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       11. AMO CORE CENTRAL NODE
+    ═══════════════════════════════════════════════════════ */
+    .core-node {
+      width: 100%; max-width: 560px;
+      border: 1px solid rgba(201,168,76,0.30);
+      background: linear-gradient(135deg,
+        rgba(201,168,76,0.07) 0%,
+        rgba(201,168,76,0.03) 40%,
+        transparent 70%
+      );
+      box-shadow: 0 0 48px rgba(201,168,76,0.06), inset 0 0 24px rgba(201,168,76,0.02);
+      position: relative;
+      padding: 32px 48px;
+      text-align: center;
+      opacity: 0;
+      animation: fade-up 0.9s var(--ease-portal) 0.86s forwards;
+    }
+    /* Corners — stronger gold treatment */
+    .core-node::before {
+      content: '';
+      position: absolute; top: -1px; left: -1px;
+      width: 20px; height: 20px;
+      border-top: 1px solid var(--gold);
+      border-left: 1px solid var(--gold);
+    }
+    .core-node::after {
+      content: '';
+      position: absolute; bottom: -1px; right: -1px;
+      width: 20px; height: 20px;
+      border-bottom: 1px solid var(--gold);
+      border-right: 1px solid var(--gold);
+    }
+    .core-node__corner-tr {
+      position: absolute; top: -1px; right: -1px;
+      width: 20px; height: 20px;
+      border-top: 1px solid var(--gold); border-right: 1px solid var(--gold);
+    }
+    .core-node__corner-bl {
+      position: absolute; bottom: -1px; left: -1px;
+      width: 20px; height: 20px;
+      border-bottom: 1px solid var(--gold); border-left: 1px solid var(--gold);
+    }
+    .core-node__label {
+      font-family: var(--ff-body); font-size: 7.5px; font-weight: 500;
+      letter-spacing: 0.38em; text-transform: uppercase;
+      color: var(--gold-dim); margin-bottom: 10px;
+    }
+    .core-node__name {
+      font-family: var(--ff-title); font-size: clamp(26px, 3.8vw, 44px);
+      font-weight: 500; letter-spacing: 0.28em; line-height: 1;
+      background: linear-gradient(
+        112deg,
+        #1C0E00 0%,   #5C3A10 5%,   #966020 10%,
+        #BF9040 17%,  #D8B85A 23%,  #EDD890 30%,
+        #FAF2C8 35%,  #EAD878 40%,  #C8A040 48%,
+        #906818 56%,  #A87C28 62%,  #CCAA50 68%,
+        #E8D888 74%,  #F5EEB8 78%,  #D4B050 83%,
+        #8A6020 89%,  #4A2C08 94%,  #1C0E00 100%
+      );
+      background-size: 360% 100%;
+      background-position: 80% center;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 3px 5px rgba(0,0,0,0.9)) drop-shadow(0 1px 0 rgba(0,0,0,0.6));
+      animation: metal-shimmer 20s ease-in-out infinite;
+      margin-bottom: 8px;
+    }
+    .core-node__sub {
+      font-family: var(--ff-serif); font-size: clamp(12px, 1.5vw, 15px);
+      font-weight: 300; font-style: italic;
+      color: var(--gold); letter-spacing: 0.16em; margin-bottom: 12px;
+    }
+    .core-node__desc {
+      font-family: var(--ff-body); font-size: 11px; font-weight: 300;
+      color: var(--text-secondary); letter-spacing: 0.08em;
+      line-height: 1.85; max-width: 400px; margin: 0 auto;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       12. PILLARS SECTION — branching connector + cards
+    ═══════════════════════════════════════════════════════ */
+    .pillars-section {
+      width: 100%;
+      display: flex; flex-direction: column;
+      align-items: stretch;
+    }
+
+    /* Horizontal branch line spanning all three pillar columns */
+    .pillars-hline {
+      width: 100%; height: 1px; flex-shrink: 0;
+      background: linear-gradient(90deg,
+        transparent 0%, var(--gold-dim) 12%, var(--gold) 50%, var(--gold-dim) 88%, transparent 100%
+      );
+      transform-origin: center;
+      transform: scaleX(0);
+      opacity: 0;
+      animation: draw-h 0.75s var(--ease-luxury) 1.56s forwards;
+    }
+
+    /* Three vertical drops — exactly matching pillars-row gap + flex:1 */
+    .pillars-drops {
+      display: flex;
+      gap: 20px;
+      width: 100%;
+    }
+    .pillar-drop-slot {
+      flex: 1; height: 32px;
+      display: flex; justify-content: center;
+    }
+    .pillar-drop-line {
+      width: 1px; height: 100%;
+      background: linear-gradient(to bottom, var(--gold), var(--gold-dim));
+      transform-origin: top;
+      opacity: 0;
+      animation: draw-v 0.4s var(--ease-luxury) 1.84s forwards;
+    }
+
+    /* Three pillar cards */
+    .pillars-row {
+      display: flex;
+      gap: 20px;
+      width: 100%;
+      align-items: stretch;
+    }
+
+    .pillar-card {
+      flex: 1;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      padding: 28px 24px 26px;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transition:
+        border-color 0.5s var(--ease-luxury),
+        background   0.5s var(--ease-luxury),
+        transform    0.4s var(--ease-portal);
+    }
+    .pillar-card:nth-child(1) { animation: fade-up 0.7s var(--ease-portal) 2.00s forwards; }
+    .pillar-card:nth-child(2) { animation: fade-up 0.7s var(--ease-portal) 2.12s forwards; }
+    .pillar-card:nth-child(3) { animation: fade-up 0.7s var(--ease-portal) 2.24s forwards; }
+    .pillar-card:hover {
+      border-color: var(--border-hover);
+      background: var(--surface-2);
+      transform: translateY(-3px);
+    }
+    /* Corner accents */
+    .pillar-card::before {
+      content: '';
+      position: absolute; top: -1px; left: -1px;
+      width: 14px; height: 14px;
+      border-top: 1px solid var(--gold-dim); border-left: 1px solid var(--gold-dim);
+      transition: all 0.5s var(--ease-luxury);
+    }
+    .pillar-card::after {
+      content: '';
+      position: absolute; bottom: -1px; right: -1px;
+      width: 14px; height: 14px;
+      border-bottom: 1px solid var(--gold-dim); border-right: 1px solid var(--gold-dim);
+      transition: all 0.5s var(--ease-luxury);
+    }
+    .pillar-card:hover::before, .pillar-card:hover::after {
+      width: 22px; height: 22px; border-color: var(--gold);
+    }
+
+    /* SVG motif (corner, decorative) */
+    .pillar-card__motif {
+      position: absolute; bottom: -16px; right: -16px;
+      width: 160px; height: 160px;
+      opacity: 0.07;
+      pointer-events: none;
+      transition: opacity 0.5s var(--ease-luxury);
+    }
+    .pillar-card:hover .pillar-card__motif { opacity: 0.14; }
+
+    .pillar-card__num {
+      font-family: var(--ff-body); font-size: 7.5px; font-weight: 500;
+      letter-spacing: 0.42em; color: var(--gold-dim); margin-bottom: 8px;
+    }
+    .pillar-card__name {
+      font-family: var(--ff-title); font-size: clamp(13px, 1.5vw, 17px);
+      font-weight: 500; letter-spacing: 0.2em;
+      color: var(--text-primary); margin-bottom: 5px; line-height: 1.15;
+    }
+    .pillar-card__subtitle {
+      font-family: var(--ff-serif); font-size: clamp(11px, 1.1vw, 13px);
+      font-weight: 300; font-style: italic;
+      color: var(--gold); letter-spacing: 0.1em; margin-bottom: 16px;
+    }
+    .pillar-card__divider {
+      width: 24px; height: 1px;
+      background: var(--gold-dim); opacity: 0.5; margin-bottom: 14px;
+    }
+    .pillar-card__desc {
+      font-family: var(--ff-body); font-size: 11px; font-weight: 300;
+      color: var(--text-secondary); letter-spacing: 0.06em;
+      line-height: 1.88; margin-bottom: 16px;
+    }
+    /* Input → Output flow */
+    .pillar-card__flow {
+      display: flex; flex-wrap: wrap; gap: 4px;
+      align-items: center; margin-bottom: 14px;
+    }
+    .pillar-card__flow-item {
+      font-family: var(--ff-body); font-size: 8px; font-weight: 300;
+      letter-spacing: 0.08em; color: var(--text-secondary);
+    }
+    .pillar-card__flow-arrow {
+      font-size: 8px; color: var(--gold-dim); opacity: 0.7; flex-shrink: 0;
+    }
+    /* Domain tags */
+    .pillar-card__tags { display: flex; flex-wrap: wrap; gap: 5px; }
+    .pillar-card__tag {
+      font-family: var(--ff-body); font-size: 7.5px; font-weight: 500;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-dim);
+      border: 1px solid rgba(180,150,80,0.10); padding: 3px 8px;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       13. BOTTOM FLOW BAND
+    ═══════════════════════════════════════════════════════ */
+    .flow-band {
+      width: 100%; margin-top: 20px;
+      border: 1px solid var(--border);
+      background: linear-gradient(135deg, rgba(201,168,76,0.04) 0%, transparent 65%);
+      position: relative;
+      padding: 22px 36px;
+      opacity: 0;
+      animation: fade-up 0.9s var(--ease-portal) 2.64s forwards;
+    }
+    /* Bottom accent line */
+    .flow-band::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 8%; right: 8%; height: 1px;
+      background: linear-gradient(90deg,
+        transparent, var(--gold-dim) 25%, var(--gold) 50%, var(--gold-dim) 75%, transparent
+      );
+      opacity: 0.3;
+    }
+    .flow-band__items {
+      display: flex; align-items: center; justify-content: center;
+      gap: 18px; flex-wrap: wrap;
+    }
+    .flow-band__item {
+      font-family: var(--ff-body); font-size: 9px; font-weight: 500;
+      letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+    .flow-band__arrow {
+      color: var(--gold-dim); font-size: 10px; opacity: 0.65; flex-shrink: 0;
+    }
+    .flow-band__closing {
+      text-align: center; margin-top: 12px;
+      font-family: var(--ff-serif); font-size: 12px; font-weight: 300; font-style: italic;
+      color: var(--text-dim); letter-spacing: 0.15em;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       14. FOOTER
+    ═══════════════════════════════════════════════════════ */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 56px 36px;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 12px;
+    }
+    .footer__note {
+      font-family: var(--ff-body); font-size: 9px; font-weight: 500;
+      letter-spacing: 0.3em; text-transform: uppercase; text-align: center;
+      background: linear-gradient(
+        90deg, var(--gold-dim) 0%, var(--gold-light) 30%,
+        #F5E0A0 50%, var(--gold-light) 70%, var(--gold-dim) 100%
+      );
+      background-size: 220% auto;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      animation: gold-shimmer 5s linear infinite;
+    }
+    .footer__copy {
+      font-family: var(--ff-body); font-size: 9px; font-weight: 500;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--text-secondary); text-align: center;
+      line-height: 2; opacity: 0.72;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       15. KEYFRAMES
+    ═══════════════════════════════════════════════════════ */
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes draw-v {
+      from { transform: scaleY(0); opacity: 0; }
+      to   { transform: scaleY(1); opacity: 1; }
+    }
+    @keyframes draw-h {
+      from { transform: scaleX(0); opacity: 0; }
+      to   { transform: scaleX(1); opacity: 1; }
+    }
+    @keyframes breathe { 0%,100% { opacity: 0.8; } 50% { opacity: 1; } }
+    @keyframes gold-shimmer {
+      0%   { background-position: 220% center; }
+      100% { background-position: 0% center; }
+    }
+    @keyframes metal-shimmer {
+      0%   { background-position: 100% center; }
+      40%  { background-position: 15% center; }
+      60%  { background-position: 15% center; }
+      100% { background-position: 100% center; }
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       16. RESPONSIVE — TABLET (≤ 900px)
+    ═══════════════════════════════════════════════════════ */
+    @media (max-width: 900px) {
+      .top-bar { padding: 0 32px; }
+      .diagram { padding: 0 28px 72px; }
+      .doctrine-band { padding: 24px 32px; }
+      .core-node { padding: 28px 32px; }
+      .pillar-card { padding: 24px 20px 22px; }
+      .flow-band { padding: 18px 28px; }
+      .footer { padding: 24px 32px 28px; }
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       17. RESPONSIVE — MOBILE (≤ 700px)
+    ═══════════════════════════════════════════════════════ */
+    @media (max-width: 700px) {
+      .top-bar { padding: 0 20px; }
+      .top-bar__subtitle { display: none; }
+      .page-header { padding: 48px 24px 36px; }
+      .diagram { padding: 0 16px 56px; }
+      .doctrine-band { padding: 20px 20px; }
+      .core-node { max-width: 100%; padding: 24px 24px; }
+
+      /* Hide horizontal branch + drops on mobile → stack vertically */
+      .pillars-hline { display: none; }
+      .pillars-drops { display: none; }
+      .connector-v { height: 36px; }
+
+      /* Stack pillars */
+      .pillars-row { flex-direction: column; gap: 12px; }
+      .pillar-card { padding: 22px 20px 20px; }
+      .pillar-card:nth-child(1) { animation: fade-up 0.7s var(--ease-portal) 1.64s forwards; }
+      .pillar-card:nth-child(2) { animation: fade-up 0.7s var(--ease-portal) 1.80s forwards; }
+      .pillar-card:nth-child(3) { animation: fade-up 0.7s var(--ease-portal) 1.96s forwards; }
+      .pillar-card__motif { width: 120px; height: 120px; }
+
+      /* Flow band */
+      .flow-band { padding: 18px 16px; margin-top: 12px; }
+      .flow-band__items { flex-direction: column; gap: 8px; }
+      .flow-band__arrow { transform: rotate(90deg); }
+      .flow-band__item { font-size: 8px; letter-spacing: 0.22em; }
+
+      .footer { padding: 20px 20px 24px; gap: 8px; }
+      .footer__note { font-size: 7.5px; letter-spacing: 0.18em; }
+      .footer__copy { font-size: 7px; letter-spacing: 0.14em; line-height: 1.9; }
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       18. RESPONSIVE — SMALL MOBILE (≤ 380px)
+    ═══════════════════════════════════════════════════════ */
+    @media (max-width: 380px) {
+      .doctrine-band__name { font-size: 15px; }
+      .core-node__name { font-size: 22px; }
+      .pillar-card { padding: 20px 16px; }
+      .btn-back { font-size: 8px; letter-spacing: 0.2em; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- AMBIENT LIGHT -->
+  <div class="ambient-light" aria-hidden="true"></div>
+
+  <!-- BACKGROUND GEOMETRY — quiet concentric circles, non-competing -->
+  <div class="bg-geometry" aria-hidden="true">
+    <svg viewBox="0 0 860 860" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="430" cy="430" r="405" stroke="#C9A84C" stroke-width="0.5"/>
+      <circle cx="430" cy="430" r="310" stroke="#C9A84C" stroke-width="0.4" stroke-dasharray="3 36"/>
+      <circle cx="430" cy="430" r="215" stroke="#C9A84C" stroke-width="0.35"/>
+      <circle cx="430" cy="430" r="120" stroke="#C9A84C" stroke-width="0.3" stroke-dasharray="2 18"/>
+      <circle cx="430" cy="430" r="40"  stroke="#C9A84C" stroke-width="0.3"/>
+      <circle cx="430" cy="430" r="4"   fill="#C9A84C" opacity="0.5"/>
+      <line x1="430" y1="25"  x2="430" y2="835" stroke="#C9A84C" stroke-width="0.25" stroke-dasharray="1 14"/>
+      <line x1="25"  y1="430" x2="835" y2="430" stroke="#C9A84C" stroke-width="0.25" stroke-dasharray="1 14"/>
+      <line x1="124" y1="124" x2="736" y2="736" stroke="#C9A84C" stroke-width="0.2" stroke-dasharray="1 14"/>
+      <line x1="736" y1="124" x2="124" y2="736" stroke="#C9A84C" stroke-width="0.2" stroke-dasharray="1 14"/>
+    </svg>
+  </div>
+
+  <!-- TOP BAR -->
+  <header class="top-bar" role="banner">
+    <div class="top-bar__identity">
+      <div class="top-bar__system-name">AMO CORE — System Overview</div>
+      <div class="top-bar__subtitle">Luxury Production Intelligence System</div>
+    </div>
+    <a href="amo-landing.html" class="btn-back" aria-label="Return to AMO Core landing">
+      <span class="btn-back__arrow">←</span>
+      Back
+    </a>
+  </header>
+
+  <!-- PAGE -->
+  <div class="page">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+      <div class="page-header__eyebrow">AMO Core · Private Investor Access</div>
+      <h1 class="page-header__title">SYSTEM OVERVIEW</h1>
+      <div class="page-header__rule" aria-hidden="true"></div>
+      <div class="page-header__subtitle">Luxury Production Intelligence System</div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════
+         SYSTEM DIAGRAM
+    ═══════════════════════════════════════════════════ -->
+    <main class="diagram" role="main" aria-label="AMO Core system architecture">
+
+      <!-- ① DOCTRINE BAND -->
+      <div class="doctrine-band" aria-labelledby="doctrine-name">
+        <div class="doctrine-band__corner-br" aria-hidden="true"></div>
+        <div class="doctrine-band__eyebrow">Doctrine Layer</div>
+        <div class="doctrine-band__name" id="doctrine-name">ARCHAIC MODERNITY™</div>
+        <div class="doctrine-band__tagline">Ancient intelligence. Contemporary craft. Future production.</div>
+        <div class="doctrine-band__desc">The cultural, aesthetic and production principle behind AMO Core.</div>
+      </div>
+
+      <!-- ② CONNECTOR: Doctrine → Core -->
+      <div class="connector-v connector-v--doctrine" aria-hidden="true"></div>
+
+      <!-- ③ AMO CORE CENTRAL NODE -->
+      <div class="core-node" aria-labelledby="core-name">
+        <div class="core-node__corner-tr" aria-hidden="true"></div>
+        <div class="core-node__corner-bl" aria-hidden="true"></div>
+        <div class="core-node__label">Proprietary Luxury Core System</div>
+        <div class="core-node__name" id="core-name">AMO CORE</div>
+        <div class="core-node__sub">Luxury Production Intelligence System</div>
+        <div class="core-node__desc">A brand-tech ecosystem connecting cultural memory, creative production and luxury creation.</div>
+      </div>
+
+      <!-- ④ CONNECTOR: Core → Pillar branch -->
+      <div class="connector-v connector-v--core" aria-hidden="true"></div>
+
+      <!-- ⑤ THREE SYSTEM PILLARS -->
+      <div class="pillars-section" aria-label="AMO Core system pillars">
+
+        <!-- Horizontal branch line -->
+        <div class="pillars-hline" aria-hidden="true"></div>
+
+        <!-- Vertical drops — one per pillar, gap-matched -->
+        <div class="pillars-drops" aria-hidden="true">
+          <div class="pillar-drop-slot"><div class="pillar-drop-line"></div></div>
+          <div class="pillar-drop-slot"><div class="pillar-drop-line"></div></div>
+          <div class="pillar-drop-slot"><div class="pillar-drop-line"></div></div>
+        </div>
+
+        <!-- Pillar cards row -->
+        <div class="pillars-row">
+
+          <!-- ── ATLAS ── -->
+          <div class="pillar-card" aria-label="AMO Atlas">
+            <!-- Decorative SVG motif -->
+            <svg class="pillar-card__motif" viewBox="0 0 160 160" fill="none" aria-hidden="true">
+              <circle cx="80" cy="80" r="72" stroke="#C9A84C" stroke-width="0.6" stroke-dasharray="4 10"/>
+              <circle cx="80" cy="80" r="50" stroke="#C9A84C" stroke-width="0.5" stroke-dasharray="2 7"/>
+              <circle cx="80" cy="80" r="28" stroke="#C9A84C" stroke-width="0.4"/>
+              <line x1="80" y1="8"   x2="80" y2="152" stroke="#C9A84C" stroke-width="0.35" stroke-dasharray="2 6"/>
+              <line x1="8"  y1="80"  x2="152" y2="80" stroke="#C9A84C" stroke-width="0.35" stroke-dasharray="2 6"/>
+              <circle cx="80" cy="8"   r="2" fill="#C9A84C"/>
+              <circle cx="152" cy="80" r="2" fill="#C9A84C"/>
+              <circle cx="80" cy="152" r="2" fill="#C9A84C"/>
+              <circle cx="8"  cy="80"  r="2" fill="#C9A84C"/>
+              <circle cx="80" cy="80"  r="3.5" fill="#C9A84C" opacity="0.8"/>
+            </svg>
+
+            <div class="pillar-card__num">01</div>
+            <div class="pillar-card__name">AMO ATLAS</div>
+            <div class="pillar-card__subtitle">Global Cultural Memory Infrastructure</div>
+            <div class="pillar-card__divider" aria-hidden="true"></div>
+            <div class="pillar-card__desc">Cultural sources become structured geometric memory.</div>
+            <div class="pillar-card__flow" aria-label="Input to output">
+              <span class="pillar-card__flow-item">Cultural Sources</span>
+              <span class="pillar-card__flow-arrow" aria-hidden="true">→</span>
+              <span class="pillar-card__flow-item">Geometry</span>
+              <span class="pillar-card__flow-arrow" aria-hidden="true">→</span>
+              <span class="pillar-card__flow-item">Metadata</span>
+              <span class="pillar-card__flow-arrow" aria-hidden="true">→</span>
+              <span class="pillar-card__flow-item">Memory</span>
+            </div>
+            <div class="pillar-card__tags" aria-label="Atlas domains">
+              <span class="pillar-card__tag">Architecture</span>
+              <span class="pillar-card__tag">Motif</span>
+              <span class="pillar-card__tag">Symbol</span>
+              <span class="pillar-card__tag">Craft</span>
+              <span class="pillar-card__tag">Material</span>
+              <span class="pillar-card__tag">Civilization</span>
+            </div>
+          </div>
+
+          <!-- ── ENGINE ── -->
+          <div class="pillar-card" aria-label="AMO Engine">
+            <svg class="pillar-card__motif" viewBox="0 0 160 160" fill="none" aria-hidden="true">
+              <rect x="8"  y="8"  width="144" height="144" stroke="#C9A84C" stroke-width="0.6"/>
+              <rect x="8"  y="8"  width="144" height="144" stroke="#C9A84C" stroke-width="0.4" transform="rotate(45 80 80)"/>
+              <rect x="34" y="34" width="92"  height="92"  stroke="#C9A84C" stroke-width="0.4"/>
+              <circle cx="80" cy="80" r="36" stroke="#C9A84C" stroke-width="0.5"/>
+              <circle cx="80" cy="80" r="18" stroke="#C9A84C" stroke-width="0.4" stroke-dasharray="2 4"/>
+              <line x1="8"  y1="8"  x2="152" y2="152" stroke="#C9A84C" stroke-width="0.35"/>
+              <line x1="152" y1="8" x2="8"   y2="152" stroke="#C9A84C" stroke-width="0.35"/>
+              <circle cx="80" cy="80" r="4" fill="#C9A84C" opacity="0.8"/>
+              <rect x="5"   y="5"   width="5" height="5" fill="#C9A84C"/>
+              <rect x="150" y="5"   width="5" height="5" fill="#C9A84C"/>
+              <rect x="5"   y="150" width="5" height="5" fill="#C9A84C"/>
+              <rect x="150" y="150" width="5" height="5" fill="#C9A84C"/>
+            </svg>
+
+            <div class="pillar-card__num">02</div>
+            <div class="pillar-card__name">AMO ENGINE</div>
+            <div class="pillar-card__subtitle">Creative Production Intelligence</div>
+            <div class="pillar-card__divider" aria-hidden="true"></div>
+            <div class="pillar-card__desc">Creative ideas become production-ready form.</div>
+            <div class="pillar-card__flow">
+              <span class="pillar-card__flow-item">Idea / Sketch</span>
+              <span class="pillar-card__flow-arrow" aria-hidden="true">→</span>
+              <span class="pillar-card__flow-item">Form</span>
+              <span class="pillar-card__flow-arrow" aria-hidden="true">→</span>
+              <span class="pillar-card__flow-item">Material</span>
+              <span class="pillar-card__flow-arrow" aria-hidden="true">→</span>
+              <span class="pillar-card__flow-item">Output</span>
+            </div>
+            <div class="pillar-card__tags">
+              <span class="pillar-card__tag">Line</span>
+              <span class="pillar-card__tag">Surface</span>
+              <span class="pillar-card__tag">Pattern</span>
+              <span class="pillar-card__tag">Object</span>
+              <span class="pillar-card__tag">Technique</span>
+              <span class="pillar-card__tag">Craft</span>
+            </div>
+          </div>
+
+          <!-- ── COLLECTIONS ── -->
+          <div class="pillar-card" aria-label="AMO Collections">
+            <svg class="pillar-card__motif" viewBox="0 0 160 160" fill="none" aria-hidden="true">
+              <polygon points="80,8 144,44 144,116 80,152 16,116 16,44" stroke="#C9A84C" stroke-width="0.6"/>
+              <polygon points="80,32 124,56 124,104 80,128 36,104 36,56" stroke="#C9A84C" stroke-width="0.5" stroke-dasharray="3 6"/>
+              <polygon points="80,56 108,72 108,104 80,120 52,104 52,72" stroke="#C9A84C" stroke-width="0.4"/>
+              <line x1="80" y1="8"   x2="80" y2="152" stroke="#C9A84C" stroke-width="0.3" stroke-dasharray="1 8"/>
+              <line x1="16" y1="44"  x2="144" y2="116" stroke="#C9A84C" stroke-width="0.25" stroke-dasharray="1 8"/>
+              <line x1="144" y1="44" x2="16"  y2="116" stroke="#C9A84C" stroke-width="0.25" stroke-dasharray="1 8"/>
+              <circle cx="80" cy="80" r="4" fill="#C9A84C" opacity="0.8"/>
+              <circle cx="80" cy="8"   r="2" fill="#C9A84C"/>
+              <circle cx="144" cy="44" r="2" fill="#C9A84C"/>
+              <circle cx="144" cy="116" r="2" fill="#C9A84C"/>
+              <circle cx="80" cy="152" r="2" fill="#C9A84C"/>
+              <circle cx="16" cy="116" r="2" fill="#C9A84C"/>
+              <circle cx="16" cy="44"  r="2" fill="#C9A84C"/>
+            </svg>
+
+            <div class="pillar-card__num">03</div>
+            <div class="pillar-card__name">AMO COLLECTIONS</div>
+            <div class="pillar-card__subtitle">Maison Creation System</div>
+            <div class="pillar-card__divider" aria-hidden="true"></div>
+            <div class="pillar-card__desc">Cultural intelligence becomes luxury value.</div>
+            <div class="pillar-card__flow">
+              <span class="pillar-card__flow-item">Creation Worlds</span>
+              <span class="pillar-card__flow-arrow" aria-hidden="true">→</span>
+              <span class="pillar-card__flow-item">Product Universe</span>
+              <span class="pillar-card__flow-arrow" aria-hidden="true">→</span>
+              <span class="pillar-card__flow-item">Experience</span>
+              <span class="pillar-card__flow-arrow" aria-hidden="true">→</span>
+              <span class="pillar-card__flow-item">Commercial</span>
+            </div>
+            <div class="pillar-card__tags">
+              <span class="pillar-card__tag">Story</span>
+              <span class="pillar-card__tag">Visual World</span>
+              <span class="pillar-card__tag">Product Data</span>
+              <span class="pillar-card__tag">Channels</span>
+              <span class="pillar-card__tag">Pricing</span>
+              <span class="pillar-card__tag">Launch</span>
+            </div>
+          </div>
+
+        </div><!-- .pillars-row -->
+
+      </div><!-- .pillars-section -->
+
+      <!-- ⑥ BOTTOM FLOW BAND -->
+      <div class="flow-band" aria-label="System value chain">
+        <div class="flow-band__items">
+          <span class="flow-band__item">Cultural Memory</span>
+          <span class="flow-band__arrow" aria-hidden="true">→</span>
+          <span class="flow-band__item">Creative Production</span>
+          <span class="flow-band__arrow" aria-hidden="true">→</span>
+          <span class="flow-band__item">Luxury Creation &amp; Commercial Circulation</span>
+        </div>
+        <div class="flow-band__closing">
+          From memory to form. From form to production. From production to luxury value.
+        </div>
+      </div>
+
+    </main><!-- .diagram -->
+
+    <!-- FOOTER -->
+    <footer class="footer" role="contentinfo">
+      <p class="footer__note">
+        Private investor access — AMO Core system documentation
+      </p>
+      <p class="footer__copy">
+        © 2026 Anadolu Modern®. All rights reserved.<br>
+        AMO CORE and ARCHAIC MODERNITY™ are proprietary systems by Anadolu Modern®.
+      </p>
+    </footer>
+
+  </div><!-- .page -->
+
+  <!-- ═══════════════════════════════════════════════════════
+       ACCESS GUARD
+  ═══════════════════════════════════════════════════════ -->
+  <script>
+    if (sessionStorage.getItem('amo_access') !== 'granted') {
+      window.location.replace('index.html');
+    }
+  </script>
+
+</body>
+</html>

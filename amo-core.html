@@ -275,7 +275,7 @@
       letter-spacing: 0.38em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 20px;
     }
     .slide__title {
-      font-family: var(--ff-title); font-size: clamp(22px, 3.2vw, 46px); font-weight: 500;
+      font-family: var(--ff-title); font-size: clamp(20px, 2.8vw, 42px); font-weight: 500;
       letter-spacing: 0.12em; line-height: 1.15; color: var(--text-primary); margin-bottom: 32px;
       background: linear-gradient(135deg, var(--text-primary) 0%, #F8F4E8 40%, var(--text-primary) 60%, #D0C8B0 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
@@ -309,6 +309,42 @@
       letter-spacing: 0.28em; display: block;
     }
     .slide__flow .flow-arrow { color: var(--text-dim); display: block; font-size: 14px; line-height: 1.8; }
+
+    /* ═══════════════════════════════════════════════════
+       9b. DENSE SLIDE HELPERS (slides 03 / 04 / 05 / 08 / 09)
+    ═══════════════════════════════════════════════════ */
+    .slide__body--compact {
+      font-size: clamp(13px, 1.35vw, 17px);
+      line-height: 1.65;
+    }
+    .slide__body--compact p { margin-bottom: 7px; }
+    .slide__body--compact strong { margin: 12px 0 4px; }
+
+    .slide__body .strong--reduced {
+      font-family: var(--ff-title); font-size: 0.68em; font-weight: 500;
+      letter-spacing: 0.20em; color: var(--gold-light); font-style: normal;
+      display: block; margin: 12px 0 6px;
+    }
+    .slide__flow-horizontal {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px;
+      font-family: var(--ff-title); font-size: 9px; font-weight: 500;
+      letter-spacing: 0.24em; color: var(--gold);
+      margin-top: 20px;
+    }
+    .slide__flow-horizontal .flow-node { color: var(--gold); white-space: nowrap; }
+    .slide__flow-horizontal .flow-arrow { color: var(--text-dim); font-size: 12px; }
+
+    /* Doctrine closing line — Slide 08 */
+    .slide__doctrine-line {
+      font-family: var(--ff-serif); font-size: clamp(13px, 1.35vw, 17px); font-weight: 300;
+      font-style: italic; letter-spacing: 0.08em; color: var(--text-primary); opacity: 0.88;
+      display: block; margin-top: 16px; line-height: 1.6;
+    }
+
+    @media (max-width: 600px) {
+      .slide__body--compact { font-size: clamp(13px, 3.6vw, 16px); line-height: 1.6; }
+      .slide__flow-horizontal { font-size: 9px; gap: 5px 8px; }
+    }
 
     /* ═══════════════════════════════════════════════════
        10. KEYFRAMES
@@ -843,11 +879,14 @@
     <section class="slide" id="slide-1" aria-label="Section 1">
       <div class="slide__inner">
         <div class="slide__section-num">01</div>
-        <h2 class="slide__title">Brand-Tech<br>Shift</h2>
+        <h2 class="slide__title">The Maison That Builds<br>Its Own Machine</h2>
         <div class="slide__rule" aria-hidden="true"></div>
         <div class="slide__body">
-          <p>The next generation of luxury will not only create products.<br>It will create the <em>systems behind creation</em>.</p>
-          <p>Anadolu Modern® positions itself as a brand-tech maison building its own technologies for culture, design, and production.</p>
+          <p>The next generation of luxury will not only create products.<br>It will build its own <em>creation machines</em>.</p>
+          <p>Anadolu Modern® is born as a luxury maison.</p>
+          <p>But it does not only produce collections.<br>It builds its own technological backbone to carry cultural memory, creative production, design intelligence, and luxury value.</p>
+          <p><em>AMO Core is that backbone.</em></p>
+          <p>This is not a brand using technology.<br>It is a maison building its own creation machine and opening a new category through it.</p>
         </div>
       </div>
     </section>
@@ -856,11 +895,15 @@
     <section class="slide" id="slide-2" aria-label="Section 2">
       <div class="slide__inner">
         <div class="slide__section-num">02</div>
-        <h2 class="slide__title">Culture Becomes<br>Infrastructure</h2>
+        <h2 class="slide__title">A New<br>Global Segment</h2>
         <div class="slide__rule" aria-hidden="true"></div>
         <div class="slide__body">
-          <p>AMO does not use culture as decoration.<br>It transforms culture into <em>creative infrastructure</em>.</p>
-          <p>Cultural memory becomes data.<br>Data becomes geometry.<br>Geometry becomes <em>design intelligence</em>.</p>
+          <p>Anadolu Modern® opens a new global segment.</p>
+          <span class="strong--reduced">Brand-Tech Maison for Cultural Luxury Production</span>
+          <p>This field is not a classic luxury brand, a software company, or a traditional design studio.</p>
+          <p>It brings maison culture together with technological infrastructure.</p>
+          <p>Cultural memory becomes a value-added source.<br>Creative production becomes systemized.<br>Luxury value gains a scalable technological ground.</p>
+          <p>AMO is the <em>founding example</em> of this segment.</p>
         </div>
       </div>
     </section>
@@ -869,13 +912,16 @@
     <section class="slide" id="slide-3" aria-label="Section 3">
       <div class="slide__inner">
         <div class="slide__section-num">03</div>
-        <h2 class="slide__title">AMO<br>Atlas</h2>
+        <h2 class="slide__title">Atlas:<br>Cultural DNA Infrastructure</h2>
         <div class="slide__rule" aria-hidden="true"></div>
-        <div class="slide__body">
-          <strong>The Cultural Data Lake</strong>
-          <p>Atlas makes the world's cultural memory <em>readable again</em>.</p>
-          <p>A structure, a motif, a relief, or an archaeological trace becomes geometric memory data inside Atlas.</p>
-          <p>Atlas does not design.<br>It extracts the <em>cultural form intelligence</em> within the source.</p>
+        <div class="slide__body slide__body--compact">
+          <p>To transform the world's cultural memory into structured creative data. Atlas is not a museum archive — it is an intelligence infrastructure that reads the cultural codes behind architectural forms, rituals, routes, symbols, craft knowledge, and collective images. Open to individual user contribution.</p>
+          <strong>V1 — Cultural Archive Layer</strong>
+          <p>Selected UNESCO-centered cultural sources are digitized first, beginning with Anatolian heritage sites, architectural traces, motifs, and craft techniques.</p>
+          <strong>V2 — Cultural Knowledge Graph</strong>
+          <p>UNESCO sources expand globally. Semantic relationships between forms, geographies, symbols, rituals, and craft practices evolve into an AI-powered cultural knowledge graph.</p>
+          <strong>V3 — Cultural Provenance Layer</strong>
+          <p>The belonging, origin, craft knowledge, and design relationships of all accessible cultural sources are carried into a living cultural DNA ecosystem.</p>
         </div>
       </div>
     </section>
@@ -884,13 +930,16 @@
     <section class="slide" id="slide-4" aria-label="Section 4">
       <div class="slide__inner">
         <div class="slide__section-num">04</div>
-        <h2 class="slide__title">AMO<br>Engine</h2>
+        <h2 class="slide__title">Engine:<br>Design-to-Production<br>Intelligence</h2>
         <div class="slide__rule" aria-hidden="true"></div>
-        <div class="slide__body">
-          <strong>The Generative Studio</strong>
-          <p>Engine transforms cultural geometry and creative sources into <em>digital craft outputs</em>.</p>
-          <p>A form from Atlas, or an independent line, motif, or surface, meets material, technique, and production language inside Engine.</p>
-          <p>The goal is not to generate images.<br>The goal is to make creative ideas speak the language of <em>craft and production</em>.</p>
+        <div class="slide__body slide__body--compact">
+          <p>A creative intelligence field operating <em>between myth and production</em>. Engine carries creative intent into form, variation, material, and near-production outputs — from independent sketches, vector files, and photographs to Atlas-sourced cultural data.</p>
+          <strong>V1 — Generative Form Layer</strong>
+          <p>Sketches, forms, visual sources, and Atlas data transform into 2D / 3D form variations and vector structures.</p>
+          <strong>V2 — Material &amp; Manufacturing Layer</strong>
+          <p>Designs are connected to material, technique, craft, and industrial production logic.</p>
+          <strong>V3 — Autonomous Creative Ecosystem</strong>
+          <p>Engine evolves into an autonomous creative production engine capable of reading material logic, style codes, the user's creative language, and cultural data layers.</p>
         </div>
       </div>
     </section>
@@ -899,24 +948,16 @@
     <section class="slide" id="slide-5" aria-label="Section 5">
       <div class="slide__inner">
         <div class="slide__section-num">05</div>
-        <h2 class="slide__title">The Cultural<br>Production Loop</h2>
+        <h2 class="slide__title">Collections:<br>Maison Control Room</h2>
         <div class="slide__rule" aria-hidden="true"></div>
-        <div class="slide__body">
-          <p>Atlas decodes memory. Engine carries memory into production.</p>
-        </div>
-        <div class="slide__flow" role="list">
-          <span class="flow-node">Cultural Source</span>
-          <span class="flow-arrow">↓</span>
-          <span class="flow-node">Atlas</span>
-          <span class="flow-arrow">↓</span>
-          <span class="flow-node">Geometric Memory</span>
-          <span class="flow-arrow">↓</span>
-          <span class="flow-node">Engine</span>
-          <span class="flow-arrow">↓</span>
-          <span class="flow-node">Craft-Ready Output</span>
-        </div>
-        <div class="slide__body">
-          <p>Here, ARCHAIC MODERNITY™ stops being an idea.<br>It becomes a <em>working creation system</em>.</p>
+        <div class="slide__body slide__body--compact">
+          <p>To transform creation worlds into luxury value and economic circulation. Collections does not manage products — <em>it manages creation worlds.</em> It systemizes how luxury brands build meaning, productize collections, calculate costs, define pricing, prepare presentations, and go to market.</p>
+          <strong>V1 — Maison Operating Layer</strong>
+          <p>Anadolu Modern's own collections operate first. Product, story, cost, margin, stock, pricing, and sales files are managed through Via Serica: The Grand Route.</p>
+          <strong>V2 — Personalized Luxury Intelligence</strong>
+          <p>The creation world expands through product data, customer logic, market positioning, digital wardrobe structures, and order systems.</p>
+          <strong>V3 — B2B SaaS / Vertical AI</strong>
+          <p>Collections scales into an enterprise operating system for luxury brands, creative studios, retail brands, and maison teams.</p>
         </div>
       </div>
     </section>
@@ -925,12 +966,13 @@
     <section class="slide" id="slide-6" aria-label="Section 6">
       <div class="slide__inner">
         <div class="slide__section-num">06</div>
-        <h2 class="slide__title">Global<br>Creative Field</h2>
+        <h2 class="slide__title">The Public<br>Creative Field</h2>
         <div class="slide__rule" aria-hidden="true"></div>
         <div class="slide__body">
-          <p>Atlas and Engine are not designed only for individual creators.</p>
-          <p>They are built for designers, architects, artists, curators, craft ateliers, cultural institutions, boutique creative brands, and luxury creative teams.</p>
-          <p>A new working ground for every creative professional seeking <em>cultural depth</em>.</p>
+          <p>Atlas and Engine meet global creative users.</p>
+          <p>They open to designers, architects, artists, craftspeople, and creative professionals.</p>
+          <p>They begin with free access.<br>They spread through individual use.<br>They grow into a professional studio layer.<br>They expand into enterprise and API models.</p>
+          <p>AMO Core builds a new <em>global field of use</em> for cultural memory and creative production.</p>
         </div>
       </div>
     </section>
@@ -939,12 +981,14 @@
     <section class="slide" id="slide-7" aria-label="Section 7">
       <div class="slide__inner">
         <div class="slide__section-num">07</div>
-        <h2 class="slide__title">Inside the<br>Luxury Studio</h2>
+        <h2 class="slide__title">Intellectual Capital<br>Over Physical<br>Weight</h2>
         <div class="slide__rule" aria-hidden="true"></div>
         <div class="slide__body">
-          <p>Future luxury studios will need deeper sources, faster creative exploration, and more craft-aware production systems.</p>
-          <p>Atlas and Engine answer this need through cultural intelligence, geometric memory, and digital craft.</p>
-          <p>Long-term ambition: to become one of the <em>invisible creative infrastructures</em> inside the world's most influential luxury and design studios.</p>
+          <p>AMO does not grow through heavy physical ownership.</p>
+          <p>It grows through <em>intelligence, IP, and creative orchestration</em>.</p>
+          <p>Capital flows into brand value, cultural data, system architecture, creative production intelligence, and global technology infrastructure.</p>
+          <p>AMO's strength is not only in what it produces.<br>It is in <em>how it systemizes production</em>.</p>
+          <p>The lightest structure becomes a high-value lever.</p>
         </div>
       </div>
     </section>
@@ -953,12 +997,13 @@
     <section class="slide" id="slide-8" aria-label="Section 8">
       <div class="slide__inner">
         <div class="slide__section-num">08</div>
-        <h2 class="slide__title">Scalable Technology<br>Potential</h2>
+        <h2 class="slide__title">The Future<br>Production Doctrine</h2>
         <div class="slide__rule" aria-hidden="true"></div>
-        <div class="slide__body">
-          <p>Atlas and Engine are not tools built only for AMO's internal use.</p>
-          <p>They create a scalable technology ground for membership access, professional use, studio licensing, enterprise integration, cultural data licensing, and future brand partnerships.</p>
-          <p>Anadolu Modern® moves beyond selling products.<br>It creates <em>technology for culture and design</em>.</p>
+        <div class="slide__body slide__body--compact">
+          <p>AMO Core is the first systems family of Anadolu Modern®'s brand-tech future.</p>
+          <p>Here, <strong>ARCHAIC MODERNITY™</strong> is not only an aesthetic idea.</p>
+          <p>It is a future production doctrine that governs cultural selection, refines form, connects material with meaning, carries craft into production intelligence, and opens luxury experience to commercial circulation.</p>
+          <span class="slide__doctrine-line">Ancient intelligence. &nbsp;Contemporary craft. &nbsp;Future production.</span>
         </div>
       </div>
     </section>
@@ -967,12 +1012,20 @@
     <section class="slide" id="slide-9" aria-label="Section 9">
       <div class="slide__inner">
         <div class="slide__section-num">09</div>
-        <h2 class="slide__title" style="background:linear-gradient(112deg,#1C0E00 0%,#5C3A10 5%,#966020 10%,#BF9040 17%,#D8B85A 23%,#EDD890 30%,#FAF2C8 35%,#EAD878 40%,#C8A040 48%,#906818 56%,#A87C28 62%,#CCAA50 68%,#E8D888 74%,#F5EEB8 78%,#D4B050 83%,#8A6020 89%,#4A2C08 94%,#1C0E00 100%);background-size:300% 100%;background-position:60% center;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:metal-shimmer 18s ease-in-out infinite;">The First Systems<br>of AMO Core</h2>
+        <h2 class="slide__title" style="background:linear-gradient(112deg,#1C0E00 0%,#5C3A10 5%,#966020 10%,#BF9040 17%,#D8B85A 23%,#EDD890 30%,#FAF2C8 35%,#EAD878 40%,#C8A040 48%,#906818 56%,#A87C28 62%,#CCAA50 68%,#E8D888 74%,#F5EEB8 78%,#D4B050 83%,#8A6020 89%,#4A2C08 94%,#1C0E00 100%);background-size:300% 100%;background-position:60% center;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:metal-shimmer 18s ease-in-out infinite;">Technological Operation<br>&amp; Roadmap</h2>
         <div class="slide__rule" aria-hidden="true"></div>
         <div class="slide__body">
-          <p>Atlas and Engine are not isolated tools.<br>They are the first <em>proof points</em> of Anadolu Modern®'s brand-tech future.</p>
-          <p>Atlas structures cultural memory.<br>Engine carries that memory into creative production.<br>Collections transforms these outputs into AMO's closed luxury experience world.</p>
-          <p>Anadolu Modern® is not only building a new luxury brand.<br>It is building the <em>technological infrastructure</em> through which future cultural luxury can be created.</p>
+          <p>AMO Core builds an end-to-end creative production ecosystem, from 3D modeling processes to vector automation, from UI/UX panels to production-output logic, from cultural data infrastructure to global production and supply-network integration.</p>
+          <p>AMO's strategic objective is to gradually build the technological infrastructure that will position Anadolu Modern® as one of the global brand-tech leaders in cultural luxury production.</p>
+        </div>
+        <div class="slide__flow-horizontal" role="list">
+          <span class="flow-node">Cultural memory</span>
+          <span class="flow-arrow">→</span>
+          <span class="flow-node">Creative production</span>
+          <span class="flow-arrow">→</span>
+          <span class="flow-node">Luxury value</span>
+          <span class="flow-arrow">→</span>
+          <span class="flow-node">Global scale</span>
         </div>
       </div>
     </section>
@@ -982,15 +1035,15 @@
   <!-- BOTTOM NAVIGATION BAND -->
   <nav class="nav-band" id="nav-band" aria-label="Deck navigation">
     <div class="nav-band-inner">
-      <button class="nav-item" data-index="0"><span class="nav-num">01_</span>BRAND-TECH</button>
-      <button class="nav-item" data-index="1"><span class="nav-num">02_</span>INFRASTRUCTURE</button>
+      <button class="nav-item" data-index="0"><span class="nav-num">01_</span>MAISON MACHINE</button>
+      <button class="nav-item" data-index="1"><span class="nav-num">02_</span>GLOBAL SEGMENT</button>
       <button class="nav-item" data-index="2"><span class="nav-num">03_</span>ATLAS</button>
       <button class="nav-item" data-index="3"><span class="nav-num">04_</span>ENGINE</button>
-      <button class="nav-item" data-index="4"><span class="nav-num">05_</span>LOOP</button>
-      <button class="nav-item" data-index="5"><span class="nav-num">06_</span>FIELD</button>
-      <button class="nav-item" data-index="6"><span class="nav-num">07_</span>STUDIO</button>
-      <button class="nav-item" data-index="7"><span class="nav-num">08_</span>POTENTIAL</button>
-      <button class="nav-item" data-index="8"><span class="nav-num">09_</span>CORE</button>
+      <button class="nav-item" data-index="4"><span class="nav-num">05_</span>COLLECTIONS</button>
+      <button class="nav-item" data-index="5"><span class="nav-num">06_</span>THE PUBLIC</button>
+      <button class="nav-item" data-index="6"><span class="nav-num">07_</span>INTELLECTUAL CAPITAL</button>
+      <button class="nav-item" data-index="7"><span class="nav-num">08_</span>DOCTRINE</button>
+      <button class="nav-item" data-index="8"><span class="nav-num">09_</span>ROADMAP</button>
     </div>
   </nav>
 
@@ -1011,6 +1064,8 @@
     };
     const WELCOME   = document.getElementById('screen-welcome');
     const BTN_BEGIN = document.getElementById('btn-begin');
+
+    const GEO_SEQUENCE = ['s7','s1','s3','s4','s9','s6','s8','s2','s5'];
 
     let active  = -1;
     let leaving = false;
@@ -1060,7 +1115,7 @@
         left: activeItem.offsetLeft - (band.offsetWidth / 2) + (activeItem.offsetWidth / 2),
         behavior: 'smooth'
       });
-      setGeoLayer(`s${active + 1}`);
+      setGeoLayer(GEO_SEQUENCE[active]);
     }
 
     function setGeoLayer(key) {

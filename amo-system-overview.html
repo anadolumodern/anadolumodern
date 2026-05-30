@@ -628,6 +628,35 @@
     }
 
     /* ═══════════════════════════════════════════════════════
+       17b. PILLAR MINI CARDS
+    ═══════════════════════════════════════════════════════ */
+    .pillar-card__mini {
+      margin-top: 18px;
+      border: 1px solid rgba(180,150,80,0.10);
+      background: rgba(7,8,13,0.45);
+      padding: 12px 14px 13px;
+      position: relative;
+    }
+    .pillar-card__mini::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 12px; right: 12px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim) 40%, var(--gold-dim) 60%, transparent);
+      opacity: 0.35;
+    }
+    .pillar-card__mini-label {
+      font-family: var(--ff-body); font-size: 7px; font-weight: 500;
+      letter-spacing: 0.32em; text-transform: uppercase;
+      color: var(--gold-dim); margin-bottom: 6px;
+    }
+    .pillar-card__mini-line {
+      font-family: var(--ff-body); font-size: 9px; font-weight: 300;
+      color: var(--text-secondary); letter-spacing: 0.06em;
+      line-height: 1.75; margin-bottom: 4px;
+    }
+    .pillar-card__mini-line:last-child { margin-bottom: 0; }
+
+    /* ═══════════════════════════════════════════════════════
        18. RESPONSIVE — SMALL MOBILE (≤ 380px)
     ═══════════════════════════════════════════════════════ */
     @media (max-width: 380px) {
@@ -682,6 +711,7 @@
       <div class="page-header__rule" aria-hidden="true"></div>
       <div class="page-header__subtitle">Luxury Production Intelligence System</div>
       <div class="page-header__category">Category Positioning : Industrial AI / Creative Manufacturing / Design-to-Production Intelligence</div>
+      <div class="page-header__category">Revenue Model: SaaS / enterprise license / studio subscription / API access / white-label workspace</div>
     </div>
 
     <!-- ═══════════════════════════════════════════════════
@@ -748,9 +778,9 @@
 
             <div class="pillar-card__num">01</div>
             <div class="pillar-card__name">AMO ATLAS</div>
-            <div class="pillar-card__subtitle">Global Cultural Memory Infrastructure</div>
+            <div class="pillar-card__subtitle">Cultural Memory Infrastructure</div>
             <div class="pillar-card__divider" aria-hidden="true"></div>
-            <div class="pillar-card__desc">Cultural sources become structured geometric memory.</div>
+            <div class="pillar-card__desc">Global cultural heritage becomes structured data for design intelligence.</div>
             <div class="pillar-card__flow" aria-label="Input to output">
               <span class="pillar-card__flow-item">Cultural Sources</span>
               <span class="pillar-card__flow-arrow" aria-hidden="true">→</span>
@@ -767,6 +797,12 @@
               <span class="pillar-card__tag">Craft</span>
               <span class="pillar-card__tag">Material</span>
               <span class="pillar-card__tag">Civilization</span>
+            </div>
+            <div class="pillar-card__mini" aria-label="Atlas category and business model">
+              <div class="pillar-card__mini-label">Category</div>
+              <div class="pillar-card__mini-line">Cultural Memory Infrastructure · Cultural Data Intelligence · Cultural Form &amp; Source Metadata Platform</div>
+              <div class="pillar-card__mini-label" style="margin-top:9px;">Business Model</div>
+              <div class="pillar-card__mini-line">Free Limited Access · Individual Subscription · Studio or Professional Subscription · Enterprise Cultural Data Licensing · API Access</div>
             </div>
           </div>
 
@@ -789,9 +825,9 @@
 
             <div class="pillar-card__num">02</div>
             <div class="pillar-card__name">AMO ENGINE</div>
-            <div class="pillar-card__subtitle">Creative Production Intelligence</div>
+            <div class="pillar-card__subtitle">AI-Powered Creative Production Studio</div>
             <div class="pillar-card__divider" aria-hidden="true"></div>
-            <div class="pillar-card__desc">Creative ideas become production-ready form.</div>
+            <div class="pillar-card__desc">Creative sources become form variations, production-ready outputs and design-to-production intelligence.</div>
             <div class="pillar-card__flow">
               <span class="pillar-card__flow-item">Idea / Sketch</span>
               <span class="pillar-card__flow-arrow" aria-hidden="true">→</span>
@@ -808,6 +844,12 @@
               <span class="pillar-card__tag">Object</span>
               <span class="pillar-card__tag">Technique</span>
               <span class="pillar-card__tag">Craft</span>
+            </div>
+            <div class="pillar-card__mini" aria-label="Engine category and business model">
+              <div class="pillar-card__mini-label">Category</div>
+              <div class="pillar-card__mini-line">AI-Powered Creative Production Studio · Creative Manufacturing · Design-to-Production Intelligence</div>
+              <div class="pillar-card__mini-label" style="margin-top:9px;">Business Model</div>
+              <div class="pillar-card__mini-line">Free Limited Usage · Individual Subscription · Studio Subscription · Professional Export Modules · Enterprise License · API Access · Usage-Based Output Credits</div>
             </div>
           </div>
 
@@ -831,9 +873,9 @@
 
             <div class="pillar-card__num">03</div>
             <div class="pillar-card__name">AMO COLLECTIONS</div>
-            <div class="pillar-card__subtitle">Maison Creation System</div>
+            <div class="pillar-card__subtitle">Maison Creation &amp; Commercial Intelligence System</div>
             <div class="pillar-card__divider" aria-hidden="true"></div>
-            <div class="pillar-card__desc">Cultural intelligence becomes luxury value.</div>
+            <div class="pillar-card__desc">Creation worlds become products, stories, commercial data and go-to-market outputs.</div>
             <div class="pillar-card__flow">
               <span class="pillar-card__flow-item">Creation Worlds</span>
               <span class="pillar-card__flow-arrow" aria-hidden="true">→</span>
@@ -850,6 +892,12 @@
               <span class="pillar-card__tag">Channels</span>
               <span class="pillar-card__tag">Pricing</span>
               <span class="pillar-card__tag">Launch</span>
+            </div>
+            <div class="pillar-card__mini" aria-label="Collections category and business model">
+              <div class="pillar-card__mini-label">Category</div>
+              <div class="pillar-card__mini-line">B2B Maison Workspace · Collection Intelligence · Launch &amp; Commercialization Platform</div>
+              <div class="pillar-card__mini-label" style="margin-top:9px;">Business Model</div>
+              <div class="pillar-card__mini-line">Internal Proof Phase · B2B SaaS Model · Enterprise License · White-Label Workspace · Studio Subscription · Premium Add-Ons · Usage-Based Pricing</div>
             </div>
           </div>
 

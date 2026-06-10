@@ -550,30 +550,69 @@
       animation: metal-shimmer 18s ease-in-out infinite;
     }
 
-    /* Section 8 — Via Serica body override */
-    #slide-8 .slide__body {
-      font-size: clamp(12px, 1.4vw, 18px) !important;
-      text-align: justify;
-      text-align-last: left;
-      line-height: 1.7 !important;
-    }
-    #slide-8 .slide__body p { margin-bottom: 8px; }
-    #slide-8 .slide__title {
-      font-size: 36px !important;
+    /* ═══════════════════════════════════════════════════
+       SLIDE 08 — VIA SERICA — TEXT-FIT SYSTEM
+       All rules scoped to #slide-8 only.
+       No other slide is affected.
+    ═══════════════════════════════════════════════════ */
+
+    /* A) Alignment — prevent center-clip on long text blocks */
+    #slide-8 {
+      align-items: flex-start;
+      padding-top: calc(var(--top-h) * 0.30);
     }
 
-    /* ── Slide 08 — compact text-fit for notebook / reduced-height screens ── */
-    @media (max-height: 760px) {
-      #slide-8 .slide__title        { font-size: 28px !important; margin-bottom: 20px; }
-      #slide-8 .slide__rule         { margin-bottom: 18px; }
-      #slide-8 .slide__body         { font-size: clamp(11px, 1.25vw, 15px) !important; line-height: 1.6 !important; }
-      #slide-8 .slide__body p       { margin-bottom: 6px; }
+    /* B) Constrain inner container to deck visible area */
+    #slide-8 .slide__inner {
+      max-height: calc(100dvh - var(--top-h) - var(--nav-h) - 48px);
+      overflow: hidden; /* silent fallback — no visible scrollbar */
     }
-    @media (max-height: 680px) {
-      #slide-8 .slide__title        { font-size: 24px !important; margin-bottom: 14px; }
-      #slide-8 .slide__rule         { margin-bottom: 14px; }
-      #slide-8 .slide__body         { font-size: clamp(10.5px, 1.15vw, 13.5px) !important; line-height: 1.52 !important; }
-      #slide-8 .slide__body p       { margin-bottom: 5px; }
+    /* Reduce section number gap for Slide 08 */
+    #slide-8 .slide__section-num { margin-bottom: 14px; }
+
+    /* C) Base overrides — height-aware typography (vh + vw combined) */
+    #slide-8 .slide__title {
+      font-size: clamp(22px, min(2.6vw, 4.2vh), 34px) !important;
+      margin-bottom: 22px;
+    }
+    #slide-8 .slide__rule  { margin-bottom: 18px; }
+    #slide-8 .slide__body {
+      font-size: clamp(11.5px, min(1.25vw, 1.75vh), 16px) !important;
+      text-align: justify;
+      text-align-last: left;
+      line-height: 1.65 !important;
+    }
+    #slide-8 .slide__body p       { margin-bottom: 7px; }
+    #slide-8 .slide__body p:last-child { margin-bottom: 0; }
+
+    /* D) Combined width+height breakpoints — Chrome-safe on notebook screens */
+    @media (max-width: 1440px) and (max-height: 900px) {
+      #slide-8 .slide__title  { font-size: clamp(20px, min(2.2vw, 3.6vh), 28px) !important; margin-bottom: 18px; }
+      #slide-8 .slide__rule   { margin-bottom: 14px; }
+      #slide-8 .slide__body   { font-size: clamp(11px, min(1.15vw, 1.6vh), 14.5px) !important; line-height: 1.58 !important; }
+      #slide-8 .slide__body p { margin-bottom: 6px; }
+    }
+    @media (max-width: 1366px) and (max-height: 820px) {
+      #slide-8 .slide__title  { font-size: clamp(19px, min(2.0vw, 3.2vh), 26px) !important; margin-bottom: 16px; }
+      #slide-8 .slide__rule   { margin-bottom: 12px; }
+      #slide-8 .slide__body   { font-size: clamp(10.5px, min(1.1vw, 1.5vh), 13.5px) !important; line-height: 1.54 !important; }
+      #slide-8 .slide__body p { margin-bottom: 5px; }
+      #slide-8 .slide__section-num { margin-bottom: 10px; }
+    }
+    @media (max-width: 1280px) and (max-height: 800px) {
+      #slide-8 .slide__title  { font-size: clamp(18px, min(1.9vw, 3.0vh), 24px) !important; margin-bottom: 14px; }
+      #slide-8 .slide__rule   { margin-bottom: 11px; }
+      #slide-8 .slide__body   { font-size: clamp(10px, min(1.05vw, 1.42vh), 13px) !important; line-height: 1.5 !important; }
+      #slide-8 .slide__body p { margin-bottom: 4px; }
+      #slide-8 .slide__section-num { margin-bottom: 8px; }
+    }
+
+    /* E) Pure height fallback for very short viewports */
+    @media (max-height: 720px) {
+      #slide-8 .slide__title  { font-size: clamp(17px, 2.8vh, 22px) !important; margin-bottom: 12px; }
+      #slide-8 .slide__rule   { margin-bottom: 10px; }
+      #slide-8 .slide__body   { font-size: clamp(10px, 1.55vh, 12.5px) !important; line-height: 1.48 !important; }
+      #slide-8 .slide__body p { margin-bottom: 4px; }
     }
 
     /* ═══════════════════════════════════════════════════

@@ -367,6 +367,33 @@
       }
     }
 
+    /* AMO CORE — Slide 08 / DOCTRINE: relaxed rhythm override */
+    #slide-8 .slide__body {
+      font-size: clamp(14px, 1.45vw, 18px);
+      line-height: 1.68;
+    }
+    #slide-8 .slide__body p { margin-bottom: 8px; }
+    #slide-8 .slide__title  { margin-bottom: 24px; }
+    #slide-8 .slide__rule   { margin-bottom: 20px; }
+    #slide-8 .slide__doctrine-line {
+      font-size: clamp(14px, 1.45vw, 18px);
+      line-height: 1.68;
+      margin-top: 18px;
+    }
+
+    @media (max-width: 1440px) and (max-height: 900px) {
+      #slide-8 .slide__body {
+        font-size: clamp(14px, 1.45vw, 18px);
+        line-height: 1.64;
+      }
+      #slide-8 .slide__body p { margin-bottom: 7px; }
+      #slide-8 .slide__doctrine-line {
+        font-size: clamp(14px, 1.45vw, 18px);
+        line-height: 1.64;
+        margin-top: 16px;
+      }
+    }
+
     @media (max-width: 600px) {
       .slide__body--compact { font-size: clamp(13px, 3.6vw, 16px); line-height: 1.6; }
       .slide__flow-horizontal { font-size: 9px; gap: 5px 8px; }

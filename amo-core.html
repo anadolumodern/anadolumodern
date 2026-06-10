@@ -269,27 +269,27 @@
     .slide.is-active   { opacity: 1; pointer-events: auto; transform: translateY(0); }
     .slide.is-leaving  { opacity: 0; transform: translateY(-12px); pointer-events: none; }
 
-    .slide__inner      { width: 55%; max-width: 600px; display: flex; flex-direction: column; }
+    .slide__inner      { width: 60%; max-width: 680px; display: flex; flex-direction: column; }
     .slide__section-num {
       font-family: var(--ff-body); font-size: 7.5px; font-weight: 500;
       letter-spacing: 0.38em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 20px;
     }
     .slide__title {
       font-family: var(--ff-title); font-size: clamp(20px, 2.8vw, 42px); font-weight: 500;
-      letter-spacing: 0.12em; line-height: 1.15; color: var(--text-primary); margin-bottom: 32px;
+      letter-spacing: 0.12em; line-height: 1.15; color: var(--text-primary); margin-bottom: 24px;
       background: linear-gradient(135deg, var(--text-primary) 0%, #F8F4E8 40%, var(--text-primary) 60%, #D0C8B0 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
     .slide__rule {
       width: 40px; height: 1px;
       background: linear-gradient(to right, var(--gold), transparent);
-      margin-bottom: 28px; opacity: 0.7;
+      margin-bottom: 20px; opacity: 0.7;
     }
     .slide__body {
-      font-family: var(--ff-serif); font-size: clamp(14px, 1.6vw, 20px); font-weight: 300;
-      color: var(--text-secondary); line-height: 1.85; letter-spacing: 0.06em;
+      font-family: var(--ff-serif); font-size: clamp(14px, 1.45vw, 20px); font-weight: 300;
+      color: var(--text-secondary); line-height: 1.68; letter-spacing: 0.06em;
     }
-    .slide__body p       { margin-bottom: 12px; }
+    .slide__body p       { margin-bottom: 8px; }
     .slide__body p:last-child { margin-bottom: 0; }
     .slide__body em      { font-style: italic; color: var(--text-primary); opacity: 0.85; }
     .slide__body strong  {
@@ -314,11 +314,11 @@
        9b. DENSE SLIDE HELPERS (slides 03 / 04 / 05 / 08 / 09)
     ═══════════════════════════════════════════════════ */
     .slide__body--compact {
-      font-size: clamp(13px, 1.35vw, 17px);
-      line-height: 1.65;
+      font-size: clamp(13px, 1.30vw, 16px);
+      line-height: 1.58;
     }
-    .slide__body--compact p { margin-bottom: 7px; }
-    .slide__body--compact strong { margin: 12px 0 4px; }
+    .slide__body--compact p { margin-bottom: 6px; }
+    .slide__body--compact strong { margin: 10px 0 4px; }
 
     .slide__body .strong--reduced {
       font-family: var(--ff-title); font-size: 0.68em; font-weight: 500;
@@ -326,10 +326,10 @@
       display: block; margin: 12px 0 6px;
     }
     .slide__flow-horizontal {
-      display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px;
+      display: flex; flex-wrap: wrap; align-items: center; gap: 5px 8px;
       font-family: var(--ff-title); font-size: 9px; font-weight: 500;
       letter-spacing: 0.24em; color: var(--gold);
-      margin-top: 20px;
+      margin-top: 14px;
     }
     .slide__flow-horizontal .flow-node { color: var(--gold); white-space: nowrap; }
     .slide__flow-horizontal .flow-arrow { color: var(--text-dim); font-size: 12px; }
@@ -339,6 +339,32 @@
       font-family: var(--ff-serif); font-size: clamp(13px, 1.35vw, 17px); font-weight: 300;
       font-style: italic; letter-spacing: 0.08em; color: var(--text-primary); opacity: 0.88;
       display: block; margin-top: 16px; line-height: 1.6;
+    }
+
+    /* AMO CORE — Notebook Safety (MacBook / 1440px screens) */
+    @media (max-width: 1440px) and (max-height: 900px) {
+      .slide__inner {
+        width: 64%;
+        max-width: 720px;
+      }
+      .slide__title {
+        margin-bottom: 20px;
+      }
+      .slide__rule {
+        margin-bottom: 16px;
+      }
+      .slide__body {
+        line-height: 1.62;
+      }
+      .slide__body p {
+        margin-bottom: 6px;
+      }
+      .slide__body--compact {
+        line-height: 1.54;
+      }
+      .slide__body--compact p {
+        margin-bottom: 5px;
+      }
     }
 
     @media (max-width: 600px) {

@@ -552,20 +552,28 @@
 
     /* Section 8 — Via Serica body override */
     #slide-8 .slide__body {
+      font-size: clamp(12px, 1.4vw, 18px) !important;
       text-align: justify;
       text-align-last: left;
       line-height: 1.7 !important;
     }
-    #slide-8 .slide__body .first-sentence {
-      font-style: normal;
-      color: var(--text-primary);
-      opacity: 0.85;
-      display: inline;
-      margin: 0;
-    }
     #slide-8 .slide__body p { margin-bottom: 8px; }
     #slide-8 .slide__title {
       font-size: 36px !important;
+    }
+
+    /* ── Slide 08 — compact text-fit for notebook / reduced-height screens ── */
+    @media (max-height: 760px) {
+      #slide-8 .slide__title        { font-size: 28px !important; margin-bottom: 20px; }
+      #slide-8 .slide__rule         { margin-bottom: 18px; }
+      #slide-8 .slide__body         { font-size: clamp(11px, 1.25vw, 15px) !important; line-height: 1.6 !important; }
+      #slide-8 .slide__body p       { margin-bottom: 6px; }
+    }
+    @media (max-height: 680px) {
+      #slide-8 .slide__title        { font-size: 24px !important; margin-bottom: 14px; }
+      #slide-8 .slide__rule         { margin-bottom: 14px; }
+      #slide-8 .slide__body         { font-size: clamp(10.5px, 1.15vw, 13.5px) !important; line-height: 1.52 !important; }
+      #slide-8 .slide__body p       { margin-bottom: 5px; }
     }
 
     /* ═══════════════════════════════════════════════════
@@ -1123,13 +1131,13 @@
         <h2 class="slide__title">VIA SERICA:<br>The Grand Route</h2>
         <div class="slide__rule" aria-hidden="true"></div>
         <div class="slide__body">
-          <p><em class="first-sentence">The first living journey from Anatolia to the world.</em></p>
-          <p>Via Serica is Anadolu Modern's founding creation world, where cultural memory becomes a living geography of desire.</p>
-          <p>A route beyond time and place, awakening the senses, memory, and the desire for discovery.</p>
-          <p>From Bursa's silk memory to Mesopotamia's silent soil, Central Asia's nomadic intelligence, and Asia's ancient layers of ritual and craft, the road becomes an adventurous aura.</p>
-          <p>This two-thousand-year route is dedicated to those seeking their own trace.</p>
-          <p>At its center stands the Modern Traveler: one who carries the scents, tastes, textures, and invisible stories of the lands they cross.</p>
-          <p><strong>The journey begins…</strong></p>
+          <p>The first living journey from Anatolia to the world.</p>
+          <p>Via Serica is Anadolu Modern's founding creation world, where cultural memory first becomes a living geography of desire.</p>
+          <p>This route transcends time and place; an auratic journey that awakens the senses, memory, and the desire for discovery.</p>
+          <p>The silk memory held in Bursa's cocoons flows toward the deep, silent soil of Mesopotamia, the nomadic intelligence of Central Asia, and the thousand-year layers of ritual and craft across Asia.</p>
+          <p>Along this ancient line, the road itself becomes an adventurous aura. This great two-thousand-year route is now dedicated to those seeking their own trace.</p>
+          <p>At its center stands the Modern Traveler: not one who consumes the world, but one who carries the scents, tastes, textures, and invisible stories of the lands they cross.</p>
+          <p><em>The journey begins…</em></p>
         </div>
       </div>
     </section>

@@ -472,10 +472,11 @@
     ═══════════════════════════════════════════════════════ */
     @media (max-width: 600px) {
       /* Top bar */
-      .top-bar              { padding: 16px 20px; }
-      .top-bar__system-name { font-size: 7.5px; letter-spacing: 0.2em; }
+      .top-bar              { padding: 16px 20px; align-items: center; }
+      .top-bar__identity    { display: flex; align-items: center; }
+      .top-bar__system-name { font-size: 7.5px; letter-spacing: 0.2em; margin-bottom: 0; line-height: 1; }
       .top-bar__subtitle    { display: none; }
-      .top-bar__right       { font-size: 8px; letter-spacing: 0.2em; }
+      .top-bar__right       { font-size: 8px; letter-spacing: 0.2em; line-height: 1; align-self: center; }
 
       /* Gate */
       .gate             { padding: 100px 24px 110px; justify-content: flex-start; padding-top: 120px; }

@@ -14,7 +14,7 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant:ital,wght@0,300;1,300&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant:ital,wght@0,300;0,400;1,300&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
 
     /* ═══════════════════════════════════════════════════════
@@ -117,9 +117,9 @@
     .top-bar__system-name {
       font-family: var(--ff-title);
       font-size: 9.5px;
-      font-weight: 500;
+      font-weight: 600;
       letter-spacing: 0.3em;
-      color: var(--gold);
+      color: var(--gold-light);
       text-transform: uppercase;
       line-height: 1;
       margin-bottom: 5px;
@@ -127,9 +127,10 @@
     .top-bar__subtitle {
       font-family: var(--ff-body);
       font-size: 8.5px;
-      font-weight: 400;
+      font-weight: 500;
       letter-spacing: 0.25em;
-      color: var(--text-secondary);
+      color: var(--text-primary);
+      opacity: 0.78;
       text-transform: uppercase;
     }
     .top-bar__actions {
@@ -140,7 +141,7 @@
     .btn-access {
       font-family: var(--ff-body);
       font-size: 9px;
-      font-weight: 400;
+      font-weight: 500;
       letter-spacing: 0.25em;
       text-transform: uppercase;
       padding: 8px 18px;
@@ -152,7 +153,7 @@
       position: relative;
     }
     .btn-access--member {
-      color: var(--text-dim);
+      color: var(--text-secondary);
       border-color: rgba(255,255,255,0.06);
       pointer-events: none;
     }
@@ -276,17 +277,17 @@
     .hero__doctrine-label {
       font-family: var(--ff-body);
       font-size: 8.5px;
-      font-weight: 400;
+      font-weight: 500;
       letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: var(--gold-dim);
+      color: var(--gold);
       margin-bottom: 10px;
     }
     .hero__doctrine-name {
       font-family: var(--ff-serif);
       font-size: clamp(15px, 2.5vw, 22px);
-      font-weight: 300;
-      font-style: italic;
+      font-weight: 400;
+      font-style: normal;
       color: var(--gold-light);
       letter-spacing: 0.12em;
       margin-bottom: 10px;
@@ -294,8 +295,10 @@
     .hero__doctrine-sub {
       font-family: var(--ff-serif);
       font-size: clamp(12px, 1.8vw, 16px);
-      font-weight: 300;
-      color: var(--text-secondary);
+      font-weight: 400;
+      font-style: normal;
+      color: var(--text-primary);
+      opacity: 0.72;
       letter-spacing: 0.15em;
     }
 
@@ -312,9 +315,9 @@
     .hero__statement {
       max-width: 520px;
       font-size: clamp(12px, 1.5vw, 14px);
-      font-weight: 300;
-      letter-spacing: 0.1em;
-      color: var(--text-secondary);
+      font-weight: 400;
+      letter-spacing: 0.09em;
+      color: var(--text-primary);
       line-height: 1.9;
       margin-bottom: 48px;
       opacity: 0;
@@ -329,8 +332,8 @@
     .hero__welcome {
       font-family: var(--ff-serif);
       font-size: 15px;
-      font-weight: 300;
-      font-style: italic;
+      font-weight: 400;
+      font-style: normal;
       color: var(--text-primary);
       letter-spacing: 0.15em;
       margin-bottom: 6px;
@@ -338,10 +341,10 @@
     .hero__choose {
       font-family: var(--ff-body);
       font-size: 9px;
-      font-weight: 400;
+      font-weight: 500;
       letter-spacing: 0.35em;
       text-transform: uppercase;
-      color: var(--gold-dim);
+      color: var(--gold);
     }
 
     /* ═══════════════════════════════════════════════════════
@@ -378,10 +381,11 @@
     .investor-brief__divider-label {
       font-family: var(--ff-body);
       font-size: 7px;
-      font-weight: 500;
+      font-weight: 600;
       letter-spacing: 0.32em;
       text-transform: uppercase;
-      color: var(--gold-dim);
+      color: var(--gold);
+      opacity: 1;
       padding: 7px 0;
       white-space: nowrap;
     }
@@ -422,8 +426,8 @@
       gap: 14px;
       font-family: var(--ff-body);
       font-size: 9px;
-      font-weight: 500;
-      letter-spacing: 0.35em;
+      font-weight: 600;
+      letter-spacing: 0.32em;
       text-transform: uppercase;
       color: var(--gold);
       background: transparent;
@@ -520,9 +524,9 @@
       pointer-events: none;
     }
     .card__label {
-      font-family: var(--ff-body); font-size: 8px; font-weight: 500;
+      font-family: var(--ff-body); font-size: 8px; font-weight: 600;
       letter-spacing: 0.35em; text-transform: uppercase;
-      color: var(--gold-dim); margin-bottom: 18px;
+      color: var(--gold); opacity: 0.9; margin-bottom: 18px;
     }
     .card__name {
       font-family: var(--ff-title);
@@ -532,8 +536,8 @@
     }
     .card__tagline {
       font-family: var(--ff-serif); font-size: 14px;
-      font-weight: 300; font-style: italic;
-      color: var(--gold); letter-spacing: 0.12em; margin-bottom: 36px;
+      font-weight: 400; font-style: italic;
+      color: var(--gold-light); opacity: 0.95; letter-spacing: 0.12em; margin-bottom: 36px;
     }
     .card__divider {
       width: 32px; height: 1px;

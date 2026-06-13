@@ -284,9 +284,9 @@
       margin-bottom: 10px;
     }
     .hero__doctrine-name {
-      font-family: var(--ff-serif);
+      font-family: var(--ff-title);
       font-size: clamp(15px, 2.5vw, 22px);
-      font-weight: 400;
+      font-weight: 500;
       font-style: normal;
       color: var(--gold-light);
       letter-spacing: 0.12em;
@@ -354,23 +354,17 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      gap: 20px;
       padding: 20px 56px 64px;
       opacity: 0;
       animation: fade-up 1s var(--ease-portal) 0.72s forwards;
     }
-    /* Pair — both buttons + label divider in a row */
-    .investor-brief__pair {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-    }
-    /* Central vertical divider with label text ON the line */
-    .investor-brief__divider {
+    /* Label centered above all three buttons */
+    .investor-brief__header {
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 0 36px;
-      flex-shrink: 0;
+      gap: 0;
     }
     .investor-brief__divider-line {
       width: 1px;
@@ -388,6 +382,15 @@
       opacity: 1;
       padding: 7px 0;
       white-space: nowrap;
+    }
+    /* Three buttons on one row */
+    .investor-brief__row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+      justify-content: center;
     }
     /* Button wrapper — holds the SVG orbit + the button */
     .investor-brief__wrap {
@@ -524,7 +527,7 @@
       pointer-events: none;
     }
     .card__label {
-      font-family: var(--ff-body); font-size: 8px; font-weight: 600;
+      font-family: var(--ff-body); font-size: 8px; font-weight: 500;
       letter-spacing: 0.35em; text-transform: uppercase;
       color: var(--gold); opacity: 0.9; margin-bottom: 18px;
     }
@@ -785,9 +788,18 @@
       </div>
     </main>
 
-    <!-- INVESTOR BRIEF PAIR -->
+    <!-- INVESTOR BRIEF PANEL -->
     <div class="investor-brief" aria-label="Investor access">
-      <div class="investor-brief__pair">
+
+      <!-- Label centered above buttons -->
+      <div class="investor-brief__header">
+        <div class="investor-brief__divider-line"></div>
+        <span class="investor-brief__divider-label">Private Investor Brief</span>
+        <div class="investor-brief__divider-line"></div>
+      </div>
+
+      <!-- Three buttons on one row -->
+      <div class="investor-brief__row">
 
         <!-- Button 1: Brand Vision Deck -->
         <div class="investor-brief__wrap">
@@ -799,13 +811,6 @@
             BRAND VISION DECK
             <span class="investor-brief__btn-arrow">→</span>
           </a>
-        </div>
-
-        <!-- Central divider — "Private Investor Brief" on the gold line -->
-        <div class="investor-brief__divider">
-          <div class="investor-brief__divider-line"></div>
-          <span class="investor-brief__divider-label">Private Investor Brief</span>
-          <div class="investor-brief__divider-line"></div>
         </div>
 
         <!-- Button 2: Technology Vision -->
@@ -820,13 +825,7 @@
           </a>
         </div>
 
-      </div>
-
-      <!-- System Overview — third investor access button -->
-      <div class="investor-brief__overview-row">
-        <div class="investor-brief__overview-sep">
-          <div class="investor-brief__sep-line"></div>
-        </div>
+        <!-- Button 3: System Overview -->
         <div class="investor-brief__wrap">
           <svg class="orbit-svg" id="orbit-svg-3" aria-hidden="true">
             <rect class="orbit-rect-trail" id="orbit-trail-3" rx="0"/>
@@ -837,6 +836,7 @@
             <span class="investor-brief__btn-arrow">→</span>
           </a>
         </div>
+
       </div>
 
     </div>

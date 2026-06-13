@@ -519,6 +519,510 @@
       .nav-band-inner { padding: 0 8px; }
       .slide          { padding: 200px 18px 16px; }
     }
+
+    /* ═══════════════════════════════════════════════════
+    FINAL TYPOGRAPHY PATCH — AMO CORE TECHNOLOGY VISION
+    Source of truth: current amo-core.html
+    ═══════════════════════════════════════════════════ */
+
+    /* Top bar — match final AMO deck standard */
+    .top-bar__system-name {
+      font-weight: 600 !important;
+      color: var(--gold-light) !important;
+    }
+
+    .top-bar__subtitle {
+      font-weight: 500 !important;
+      color: var(--text-primary) !important;
+      opacity: 0.78 !important;
+    }
+
+    .btn-back {
+      font-weight: 500 !important;
+      color: var(--text-primary) !important;
+      opacity: 0.78 !important;
+      transition: color 0.3s var(--ease-luxury), opacity 0.3s var(--ease-luxury) !important;
+    }
+
+    .btn-back:hover {
+      color: var(--gold-light) !important;
+      opacity: 1 !important;
+    }
+
+    /* Welcome title — strengthen deck identity */
+    .welcome-deck-title {
+      font-family: var(--ff-title) !important;
+      font-size: clamp(11px, 1.5vw, 16px) !important;
+      font-weight: 500 !important;
+      font-style: normal !important;
+      color: var(--text-primary) !important;
+    }
+
+    /* Begin button arrow — make arrow visible */
+    .btn-begin span {
+      position: relative !important;
+      z-index: 1 !important;
+      font-size: 18px !important;
+      color: var(--gold-light) !important;
+      opacity: 1 !important;
+      line-height: 1 !important;
+    }
+
+    /* Main slide body text — strengthen readability by one level only */
+    .slide__body {
+      font-weight: 400 !important;
+      color: var(--text-primary) !important;
+      opacity: 0.82 !important;
+    }
+
+    /* Slide 08 doctrine body — keep existing rhythm, strengthen only readability */
+    #slide-8 .slide__body {
+      font-weight: 400 !important;
+      color: var(--text-primary) !important;
+      opacity: 0.82 !important;
+    }
+
+    /* Desktop / tablet slide titles — match final Brand Vision Deck title size */
+    @media (min-width: 601px) {
+      #slide-1 .slide__title,
+      #slide-2 .slide__title,
+      #slide-3 .slide__title,
+      #slide-4 .slide__title,
+      #slide-5 .slide__title,
+      #slide-6 .slide__title,
+      #slide-7 .slide__title,
+      #slide-8 .slide__title,
+      #slide-9 .slide__title {
+        font-size: clamp(28px, 3vw, 40px) !important;
+      }
+    }
+
+    /* Mobile safety — preserve existing mobile title behavior */
+    @media (max-width: 600px) {
+      .slide__title {
+        font-size: clamp(22px, 6vw, 36px) !important;
+      }
+
+      .welcome-deck-title {
+        font-size: 13px !important;
+        margin-bottom: 28px !important;
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════
+    FINAL MICRO PATCH — ROADMAP FLOW + COMPACT TEXT RHYTHM
+    Source of truth: current amo-core.html
+    ═══════════════════════════════════════════════════ */
+
+    /* Slide 09 / Roadmap flow — match top subtitle font family only */
+    #slide-9 .slide__flow-horizontal,
+    #slide-9 .slide__flow-horizontal .flow-node,
+    #slide-9 .slide__flow-horizontal .flow-arrow {
+      font-family: var(--ff-body) !important;
+    }
+
+    /* Keep Slide 09 flow color exactly as existing */
+    #slide-9 .slide__flow-horizontal .flow-node {
+      color: var(--gold) !important;
+    }
+
+    /* Slides 03 / 04 / 05 — relax compact text block very slightly */
+    #slide-3 .slide__body--compact,
+    #slide-4 .slide__body--compact,
+    #slide-5 .slide__body--compact {
+      line-height: 1.62 !important;
+      letter-spacing: 0.065em !important;
+    }
+
+    #slide-3 .slide__body--compact p,
+    #slide-4 .slide__body--compact p,
+    #slide-5 .slide__body--compact p {
+      margin-bottom: 7px !important;
+    }
+
+    #slide-3 .slide__body--compact strong,
+    #slide-4 .slide__body--compact strong,
+    #slide-5 .slide__body--compact strong {
+      margin: 12px 0 5px !important;
+    }
+
+    /* Notebook safety — keep compact slides controlled on 1440px screens */
+    @media (max-width: 1440px) and (max-height: 900px) {
+      #slide-3 .slide__body--compact,
+      #slide-4 .slide__body--compact,
+      #slide-5 .slide__body--compact {
+        line-height: 1.58 !important;
+        letter-spacing: 0.062em !important;
+      }
+
+      #slide-3 .slide__body--compact p,
+      #slide-4 .slide__body--compact p,
+      #slide-5 .slide__body--compact p {
+        margin-bottom: 6px !important;
+      }
+
+      #slide-3 .slide__body--compact strong,
+      #slide-4 .slide__body--compact strong,
+      #slide-5 .slide__body--compact strong {
+        margin: 11px 0 5px !important;
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════
+    FINAL MICRO PATCH — ROADMAP FLOW + BODY BLOCK ALIGNMENT
+    Source of truth: current amo-core.html
+    ═══════════════════════════════════════════════════ */
+
+    /* Slide 09 / Roadmap flow — uppercase, larger, clearer */
+    #slide-9 .slide__flow-horizontal {
+      font-family: var(--ff-body) !important;
+      font-size: 10.5px !important;
+      font-weight: 500 !important;
+      letter-spacing: 0.25em !important;
+      text-transform: uppercase !important;
+      color: var(--gold) !important;
+      gap: 7px 12px !important;
+      align-items: center !important;
+    }
+
+    /* Slide 09 / Roadmap flow nodes — keep gold, uppercase, same font */
+    #slide-9 .slide__flow-horizontal .flow-node {
+      font-family: var(--ff-body) !important;
+      font-size: inherit !important;
+      font-weight: 500 !important;
+      letter-spacing: inherit !important;
+      text-transform: uppercase !important;
+      color: var(--gold) !important;
+      opacity: 1 !important;
+    }
+
+    /* Slide 09 / Roadmap arrows — make arrows visible, white, not blurred */
+    #slide-9 .slide__flow-horizontal .flow-arrow {
+      font-family: var(--ff-body) !important;
+      font-size: 16px !important;
+      font-weight: 500 !important;
+      line-height: 1 !important;
+      color: var(--text-primary) !important;
+      opacity: 1 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      transform: none !important;
+      filter: none !important;
+    }
+
+    /* Slides 01–09 / Body text blocks — disciplined block alignment */
+    #slide-1 .slide__body,
+    #slide-2 .slide__body,
+    #slide-3 .slide__body,
+    #slide-4 .slide__body,
+    #slide-5 .slide__body,
+    #slide-6 .slide__body,
+    #slide-7 .slide__body,
+    #slide-8 .slide__body,
+    #slide-9 .slide__body {
+      text-align: justify !important;
+      text-align-last: left !important;
+    }
+
+    /* Keep internal hierarchy clean: headings/emphasis remain left-aligned */
+    #slide-1 .slide__body strong,
+    #slide-2 .slide__body strong,
+    #slide-3 .slide__body strong,
+    #slide-4 .slide__body strong,
+    #slide-5 .slide__body strong,
+    #slide-6 .slide__body strong,
+    #slide-7 .slide__body strong,
+    #slide-8 .slide__body strong,
+    #slide-9 .slide__body strong,
+    #slide-1 .slide__body em,
+    #slide-2 .slide__body em,
+    #slide-3 .slide__body em,
+    #slide-4 .slide__body em,
+    #slide-5 .slide__body em,
+    #slide-6 .slide__body em,
+    #slide-7 .slide__body em,
+    #slide-8 .slide__body em,
+    #slide-9 .slide__body em {
+      text-align: left !important;
+      text-align-last: left !important;
+    }
+
+    /* Paragraphs behave as clean readable blocks */
+    #slide-1 .slide__body p,
+    #slide-2 .slide__body p,
+    #slide-3 .slide__body p,
+    #slide-4 .slide__body p,
+    #slide-5 .slide__body p,
+    #slide-6 .slide__body p,
+    #slide-7 .slide__body p,
+    #slide-8 .slide__body p,
+    #slide-9 .slide__body p {
+      text-align: justify !important;
+      text-align-last: left !important;
+    }
+
+    /* ═══════════════════════════════════════════════════
+    FINAL MICRO PATCH — SLIDES 01 / 02 / 07 TEXT BLOCK FIT
+    Source of truth: current amo-core.html
+    ═══════════════════════════════════════════════════ */
+
+    /* Slides 01 / 02 / 07 — clean paragraph block alignment only */
+    #slide-1 .slide__body,
+    #slide-2 .slide__body,
+    #slide-7 .slide__body {
+      text-align: justify !important;
+      text-align-last: left !important;
+      text-wrap: pretty;
+      hyphens: auto;
+    }
+
+    /* Keep every paragraph as a clean left-starting block with a fitted right edge */
+    #slide-1 .slide__body p,
+    #slide-2 .slide__body p,
+    #slide-7 .slide__body p {
+      text-align: justify !important;
+      text-align-last: left !important;
+      text-wrap: pretty;
+      hyphens: auto;
+    }
+
+    /* Preserve hierarchy: strong / emphasis must not stretch awkwardly */
+    #slide-1 .slide__body strong,
+    #slide-2 .slide__body strong,
+    #slide-7 .slide__body strong,
+    #slide-1 .slide__body em,
+    #slide-2 .slide__body em,
+    #slide-7 .slide__body em {
+      text-align: left !important;
+      text-align-last: left !important;
+    }
+
+    /* ═══════════════════════════════════════════════════
+    FINAL SURGICAL PATCH — SLIDES 01 / 02 / 07 EDITORIAL BODY LINES
+    Source of truth: current amo-core.html
+    ═══════════════════════════════════════════════════ */
+
+    #slide-1 .slide__body,
+    #slide-2 .slide__body,
+    #slide-7 .slide__body,
+    #slide-1 .slide__body p,
+    #slide-2 .slide__body p,
+    #slide-7 .slide__body p {
+      text-align: left !important;
+      text-align-last: left !important;
+    }
+
+    #slide-1 .slide__body .body-line,
+    #slide-2 .slide__body .body-line,
+    #slide-7 .slide__body .body-line {
+      display: block;
+      text-align: left;
+      text-align-last: left;
+    }
+
+    /* ═══════════════════════════════════════════════════
+    FINAL PATCH — UNIFIED TEXT BLOCK WIDTH STANDARD
+    Reference standard: slides 03 / 04 / 05 / 09
+    Apply only to slides 01 / 02 / 06 / 07 / 08
+    ═══════════════════════════════════════════════════ */
+
+    /* Non-reference slides — match the successful text-block measure */
+    #slide-1 .slide__inner,
+    #slide-2 .slide__inner,
+    #slide-6 .slide__inner,
+    #slide-7 .slide__inner,
+    #slide-8 .slide__inner {
+      width: 64% !important;
+      max-width: 720px !important;
+    }
+
+    /* Non-reference slides — body fills the standardized block */
+    #slide-1 .slide__body,
+    #slide-2 .slide__body,
+    #slide-6 .slide__body,
+    #slide-7 .slide__body,
+    #slide-8 .slide__body {
+      width: 100% !important;
+      max-width: 720px !important;
+      text-align: justify !important;
+      text-align-last: left !important;
+      text-wrap: pretty !important;
+      hyphens: auto !important;
+    }
+
+    /* Non-reference slide paragraphs — clean block behavior */
+    #slide-1 .slide__body p,
+    #slide-2 .slide__body p,
+    #slide-6 .slide__body p,
+    #slide-7 .slide__body p,
+    #slide-8 .slide__body p {
+      width: 100% !important;
+      text-align: justify !important;
+      text-align-last: left !important;
+      text-wrap: pretty !important;
+      hyphens: auto !important;
+    }
+
+    /* Neutralize previous manual body-line behavior if it exists */
+    #slide-1 .slide__body .body-line,
+    #slide-2 .slide__body .body-line,
+    #slide-6 .slide__body .body-line,
+    #slide-7 .slide__body .body-line,
+    #slide-8 .slide__body .body-line {
+      display: inline !important;
+      text-align: inherit !important;
+      text-align-last: inherit !important;
+    }
+
+    /* Preserve hierarchy — strong/em remain clean and not stretched */
+    #slide-1 .slide__body strong,
+    #slide-2 .slide__body strong,
+    #slide-6 .slide__body strong,
+    #slide-7 .slide__body strong,
+    #slide-8 .slide__body strong,
+    #slide-1 .slide__body em,
+    #slide-2 .slide__body em,
+    #slide-6 .slide__body em,
+    #slide-7 .slide__body em,
+    #slide-8 .slide__body em {
+      text-align: left !important;
+      text-align-last: left !important;
+    }
+
+    /* Notebook safety — preserve the same standard on 1440px screens */
+    @media (max-width: 1440px) and (max-height: 900px) {
+      #slide-1 .slide__inner,
+      #slide-2 .slide__inner,
+      #slide-6 .slide__inner,
+      #slide-7 .slide__inner,
+      #slide-8 .slide__inner {
+        width: 64% !important;
+        max-width: 720px !important;
+      }
+
+      #slide-1 .slide__body,
+      #slide-2 .slide__body,
+      #slide-6 .slide__body,
+      #slide-7 .slide__body,
+      #slide-8 .slide__body {
+        width: 100% !important;
+        max-width: 720px !important;
+      }
+    }
+
+    /* Mobile safety — do not disturb existing mobile behavior */
+    @media (max-width: 600px) {
+      #slide-1 .slide__inner,
+      #slide-2 .slide__inner,
+      #slide-6 .slide__inner,
+      #slide-7 .slide__inner,
+      #slide-8 .slide__inner {
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+
+      #slide-1 .slide__body,
+      #slide-2 .slide__body,
+      #slide-6 .slide__body,
+      #slide-7 .slide__body,
+      #slide-8 .slide__body {
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════
+    FINAL PATCH — CLEAN TEXT BOX BEHAVIOR / NO HYPHENATION
+    Apply only to slides 01 / 02 / 06 / 07 / 08
+    Reference slides 03 / 04 / 05 / 09 remain untouched
+    ═══════════════════════════════════════════════════ */
+
+    /* Clean professional text-box behavior: no word cuts, no forced gaps */
+    #slide-1 .slide__body,
+    #slide-2 .slide__body,
+    #slide-6 .slide__body,
+    #slide-7 .slide__body,
+    #slide-8 .slide__body {
+      width: 100% !important;
+      max-width: 720px !important;
+
+      text-align: left !important;
+      text-align-last: left !important;
+
+      hyphens: none !important;
+      -webkit-hyphens: none !important;
+      -ms-hyphens: none !important;
+
+      word-break: normal !important;
+      overflow-wrap: normal !important;
+      word-spacing: normal !important;
+    }
+
+    /* Paragraphs must not create artificial stretched spacing */
+    #slide-1 .slide__body p,
+    #slide-2 .slide__body p,
+    #slide-6 .slide__body p,
+    #slide-7 .slide__body p,
+    #slide-8 .slide__body p {
+      width: 100% !important;
+
+      text-align: left !important;
+      text-align-last: left !important;
+
+      hyphens: none !important;
+      -webkit-hyphens: none !important;
+      -ms-hyphens: none !important;
+
+      word-break: normal !important;
+      overflow-wrap: normal !important;
+      word-spacing: normal !important;
+    }
+
+    /* Remove previous manual body-line behavior if present */
+    #slide-1 .slide__body .body-line,
+    #slide-2 .slide__body .body-line,
+    #slide-6 .slide__body .body-line,
+    #slide-7 .slide__body .body-line,
+    #slide-8 .slide__body .body-line {
+      display: inline !important;
+      text-align: inherit !important;
+      text-align-last: inherit !important;
+    }
+
+    /* Keep hierarchy clean and unstretched */
+    #slide-1 .slide__body strong,
+    #slide-2 .slide__body strong,
+    #slide-6 .slide__body strong,
+    #slide-7 .slide__body strong,
+    #slide-8 .slide__body strong,
+    #slide-1 .slide__body em,
+    #slide-2 .slide__body em,
+    #slide-6 .slide__body em,
+    #slide-7 .slide__body em,
+    #slide-8 .slide__body em {
+      text-align: left !important;
+      text-align-last: left !important;
+
+      hyphens: none !important;
+      -webkit-hyphens: none !important;
+      -ms-hyphens: none !important;
+
+      word-break: normal !important;
+      overflow-wrap: normal !important;
+      word-spacing: normal !important;
+    }
+
+    /* Absolute protection against visible hyphenated word breaks */
+    #slide-1,
+    #slide-2,
+    #slide-6,
+    #slide-7,
+    #slide-8 {
+      hyphens: none !important;
+      -webkit-hyphens: none !important;
+      -ms-hyphens: none !important;
+    }
   </style>
 </head>
 <body>
@@ -915,7 +1419,7 @@
   </g>
 </svg>
     </div>
-      <div class="welcome-deck-title">AMO Core Technology Vision</div>
+      <div class="welcome-deck-title">Technology Vision Deck</div>
       <div class="welcome-divider" aria-hidden="true"></div>
       <div class="welcome-msg">
         <p>You are entering our technology vision.</p>
@@ -935,11 +1439,11 @@
         <h2 class="slide__title">The Maison That Builds<br>Its Own Machine</h2>
         <div class="slide__rule" aria-hidden="true"></div>
         <div class="slide__body">
-          <p>The next generation of luxury will not only create products.<br>It will build its own <em>creation machines</em>.</p>
+          <p>The next generation of luxury will not only create products. It will build its own <em>creation machines</em>.</p>
           <p>Anadolu Modern® is born as a luxury maison.</p>
-          <p>But it does not only produce collections.<br>It builds its own technological backbone to carry cultural memory, creative production, design intelligence, and luxury value.</p>
+          <p>But it does not only produce collections. It builds its own technological backbone to carry cultural memory, creative production, design intelligence, and luxury value.</p>
           <p><em>AMO Core is that backbone.</em></p>
-          <p>This is not a brand using technology.<br>It is a maison building its own creation machine and opening a new category through it.</p>
+          <p>This is not a brand using technology. It is a maison building its own creation machine and opening a new category through it.</p>
         </div>
       </div>
     </section>
@@ -955,7 +1459,7 @@
           <span class="strong--reduced">Brand-Tech Maison for Cultural Luxury Production</span>
           <p>This field is not a classic luxury brand, a software company, or a traditional design studio.</p>
           <p>It brings maison culture together with technological infrastructure.</p>
-          <p>Cultural memory becomes a value-added source.<br>Creative production becomes systemized.<br>Luxury value gains a scalable technological ground.</p>
+          <p>Cultural memory becomes a value-added source. Creative production becomes systemized. Luxury value gains a scalable technological ground.</p>
           <p>AMO is the <em>founding example</em> of this segment.</p>
         </div>
       </div>
@@ -1040,7 +1544,7 @@
           <p>AMO does not grow through heavy physical ownership.</p>
           <p>It grows through <em>intelligence, IP, and creative orchestration</em>.</p>
           <p>Capital flows into brand value, cultural data, system architecture, creative production intelligence, and global technology infrastructure.</p>
-          <p>AMO's strength is not only in what it produces.<br>It is in <em>how it systemizes production</em>.</p>
+          <p>AMO's strength is not only in what it produces. It is in <em>how it systemizes production</em>.</p>
           <p>The lightest structure becomes a high-value lever.</p>
         </div>
       </div>

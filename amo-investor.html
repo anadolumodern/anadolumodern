@@ -83,28 +83,30 @@
     }
     .top-bar__system-name {
       font-family: var(--ff-title);
-      font-size: 9.5px; font-weight: 500;
+      font-size: 9.5px; font-weight: 600;
       letter-spacing: 0.3em; text-transform: uppercase;
-      color: var(--gold); line-height: 1; margin-bottom: 5px;
+      color: var(--gold-light); line-height: 1; margin-bottom: 5px;
     }
     .top-bar__subtitle {
       font-family: var(--ff-body);
-      font-size: 8.5px; font-weight: 400;
+      font-size: 8.5px; font-weight: 500;
       letter-spacing: 0.25em; text-transform: uppercase;
-      color: var(--text-secondary);
+      color: var(--text-primary);
+      opacity: 0.78;
     }
     .btn-back {
       font-family: var(--ff-body);
-      font-size: 9px; font-weight: 400;
+      font-size: 9px; font-weight: 500;
       letter-spacing: 0.28em; text-transform: uppercase;
-      color: var(--gold-dim);
+      color: var(--text-primary);
+      opacity: 0.78;
       background: transparent; border: none; cursor: pointer;
       display: flex; align-items: center; gap: 10px;
       padding: 8px 0;
-      transition: color 0.3s var(--ease-luxury);
+      transition: color 0.3s var(--ease-luxury), opacity 0.3s var(--ease-luxury);
       text-decoration: none;
     }
-    .btn-back:hover { color: var(--gold); }
+    .btn-back:hover { color: var(--gold-light); opacity: 1; }
     .btn-back__arrow { font-size: 11px; transition: transform 0.3s var(--ease-luxury); }
     .btn-back:hover .btn-back__arrow { transform: translateX(-4px); }
 
@@ -327,12 +329,12 @@
     }
     .welcome-brand { display: none; }
     .welcome-deck-title {
-      font-family: var(--ff-serif);
-      font-size: clamp(13px, 1.8vw, 18px);
-      font-weight: 300;
-      font-style: italic;
+      font-family: var(--ff-title);
+      font-size: clamp(11px, 1.5vw, 16px);
+      font-weight: 500;
+      font-style: normal;
       letter-spacing: 0.2em;
-      color: var(--text-secondary);
+      color: var(--text-primary);
       margin-bottom: 48px;
       opacity: 0;
       animation: fade-up 1s var(--ease-portal) 0.7s forwards;
@@ -384,6 +386,14 @@
     }
     .btn-begin:hover { border-color: var(--border-hover); color: var(--gold-light); }
     .btn-begin:hover::before { opacity: 1; }
+    .btn-begin span {
+      position: relative;
+      z-index: 1;
+      font-size: 18px;
+      color: var(--gold-light);
+      opacity: 1;
+      line-height: 1;
+    }
 
     /* ═══════════════════════════════════════════════════
        9. SLIDE SCREENS
@@ -452,8 +462,9 @@
     .slide__body {
       font-family: var(--ff-serif);
       font-size: clamp(14px, 1.6vw, 20px);
-      font-weight: 300;
-      color: var(--text-secondary);
+      font-weight: 400;
+      color: var(--text-primary);
+      opacity: 0.82;
       line-height: 1.85;
       letter-spacing: 0.06em;
     }
@@ -531,6 +542,54 @@
       line-height: 1.7;
     }
 
+    /* Slide 01–07 titles — match Slide 08 title size */
+    #slide-1 .slide__title,
+    #slide-2 .slide__title,
+    #slide-3 .slide__title,
+    #slide-4 .slide__title,
+    #slide-5 .slide__title,
+    #slide-6 .slide__title,
+    #slide-7 .slide__title {
+      font-size: clamp(28px, 3vw, 40px);
+    }
+
+    /* Slide 04 footnote — gold color */
+    #slide-4 .slide__footnote {
+      color: var(--gold);
+      opacity: 0.95;
+    }
+
+    /* world-item__desc — strengthened */
+    .world-item__desc {
+      font-weight: 400;
+      color: var(--text-primary);
+      opacity: 0.78;
+    }
+
+    /* Slide 07 category — Cinzel weight 500 */
+    #slide-7 .world-item__category {
+      font-family: var(--ff-title);
+      font-weight: 500;
+    }
+
+    /* Slide 07 subtitle — strengthened */
+    #slide-7 .world-item__subtitle {
+      font-weight: 500;
+      color: var(--text-primary);
+      opacity: 0.86;
+    }
+
+    /* Slide 08 final text — Cinzel, gold */
+    #slide-8 .slide__body p:last-child,
+    #slide-8 .slide__body p:last-child strong,
+    #slide-8 .slide__body p:last-child em {
+      font-family: var(--ff-title);
+      color: var(--gold);
+      font-weight: 500;
+      font-style: normal;
+      letter-spacing: 0.16em;
+    }
+
     /* Section 8 — Invitation accent */
     .slide--invitation .slide__title {
       background: linear-gradient(
@@ -567,6 +626,9 @@
     }
     #slide-8 .slide__body {
       font-size: clamp(14px, 1.45vw, 18px) !important;
+      font-weight: 400;
+      color: var(--text-primary);
+      opacity: 0.82;
       line-height: 1.68 !important;
       text-align: justify;
       text-align-last: left;
@@ -712,6 +774,51 @@
       .nav-band-inner { padding: 0 8px; }
       .slide          { padding: 200px 18px 16px; }
     }
+  /* ═══════════════════════════════════════════════════
+     FINAL MICRO PATCH — SLIDE 07 + SLIDE 08 ONLY
+     Source of truth: current amo-investor.html
+  ═══════════════════════════════════════════════════ */
+
+  /* Slide 07 — category labels must visibly render as Cinzel */
+  #slide-7 .world-item__category {
+    font-family: 'Cinzel', serif !important;
+    font-weight: 600 !important;
+    font-style: normal !important;
+  }
+
+  /* Slide 07 — world names +2px */
+  #slide-7 .world-item__name {
+    font-size: clamp(13px, 1.3vw, 16px) !important;
+  }
+
+  /* Slide 08 — final line stronger */
+  #slide-8 .slide__body p:last-child,
+  #slide-8 .slide__body p:last-child strong,
+  #slide-8 .slide__body p:last-child em {
+    font-family: 'Cinzel', serif !important;
+    color: var(--gold-light) !important;
+    font-weight: 600 !important;
+    font-style: normal !important;
+    opacity: 1 !important;
+    letter-spacing: 0.16em !important;
+  }
+
+  /* FINAL PATCH — SLIDE 07 CATEGORY FONT ONLY */
+  #slide-7 .world-item__category {
+    font-family: var(--ff-body) !important;
+    font-size: 8.5px !important;
+    font-weight: 500 !important;
+    font-style: normal !important;
+    letter-spacing: 0.25em !important;
+    text-transform: uppercase !important;
+    color: var(--text-primary) !important;
+    opacity: 0.78 !important;
+  }
+
+  /* FINAL COLOR FIX — SLIDE 07 CATEGORY ONLY */
+  #slide-7 .world-item__category {
+    color: var(--gold) !important;
+  }
   </style>
 </head>
 <body>
@@ -1128,7 +1235,7 @@
           <div class="world-item">
             <div class="world-item__category">Heritage Luxury / Masterpiece&amp;Contemporary Edition</div>
             <div class="world-item__name">RENAISSANCE: Curated Crafts of Anatolia</div>
-            <div class="world-item__subtitle">Life in Anatolia I Curated Grand Bazaar</div>
+            <div class="world-item__subtitle">Curated Grand Bazaar</div>
             <div class="world-item__desc">Cultural memory transformed into the living environment.</div>
           </div>
 
